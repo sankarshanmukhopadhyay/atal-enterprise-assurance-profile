@@ -25,3 +25,20 @@ Purpose: document how each EAP control family addresses a specific enterprise as
 ## Roles & separation of duties
 - Gap addressed: approvals become ceremonial without SoD and dual-control.
 - EAP response: ROLE-1/2 define separation and dual control expectations.
+
+
+---
+
+
+## Upstream Reference
+
+This Enterprise Assurance Profile (EAP) extends and profiles the ATAL Standard.
+Upstream project reference:
+
+ATAL Standard Repository:
+https://github.com/Elytra-Security/atal-standard
+
+This repository provides enterprise-oriented assurance overlays, mappings, and control refinements aligned to the upstream ATAL specification.
+
+
+See [`UPSTREAM.md`](../UPSTREAM.md) for upstream version pinning and sync policy.
