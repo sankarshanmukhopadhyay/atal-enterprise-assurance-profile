@@ -1,0 +1,29 @@
+{
+  "$schema": "../schemas/deployment-context.schema.json",
+  "context_id": "ctx-eap-l1-sample-001",
+  "system_name": "Enterprise Copilot — Internal HR Workflow Assistant",
+  "version": "2.1.4",
+  "environment": "production",
+  "sector": "Human Resources / Enterprise Operations",
+  "autonomy_tier": "assisted",
+  "oversight_mode": "human_in_the_loop",
+  "assurance_level_target": "EAP-L1",
+  "deployment_environment": "Private cloud, single-region, access restricted to internal HR staff",
+  "vendor_dependencies": [
+    {
+      "vendor": "EnterpriseKMS Corp",
+      "component": "Key Management Service",
+      "version": "4.2.1",
+      "assurance_claims": "SOC 2 Type II certified; FIPS 140-2 Level 2 HSM"
+    },
+    {
+      "vendor": "AuditLog Inc",
+      "component": "Append-Only Evidence Store",
+      "version": "1.8.0",
+      "assurance_claims": "Tamper-evident log; hash-chain verified; documented backup and export"
+    }
+  ],
+  "data_classifications": ["PII", "HR-Sensitive", "Internal"],
+  "jurisdictions": ["EU (GDPR)", "US (state privacy laws TBD)"],
+  "notes": "Sample deployment context for the EAP-L1 worked example. This system assists HR staff with document drafting and policy lookup. All actions are human-reviewed before execution. No autonomous tool invocation."
+}

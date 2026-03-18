@@ -1,0 +1,268 @@
+{
+  "$schema": "../../schemas/evidence-bundle.schema.json",
+  "bundle_id": "bundle-eap-l1-sample-001",
+  "assurance_level": "EAP-L1",
+  "created_at": "2026-03-18T10:00:00Z",
+  "assessment_period": {
+    "start": "2026-01-01",
+    "end": "2026-03-15"
+  },
+  "assessed_system": {
+    "name": "Enterprise Copilot — Internal HR Workflow Assistant",
+    "version": "2.1.4",
+    "environment": "production",
+    "deployment_context_ref": "examples/eap-l1-worked-example/deployment-context.json"
+  },
+  "attestation": {
+    "attested_by": "Jordan Lee",
+    "attestation_date": "2026-03-16",
+    "attestation_role": "Evidence Custodian",
+    "signature": "PLACEHOLDER — replace with actual signature if signing is in use"
+  },
+  "control_evidence_items": [
+    {
+      "control_id": "EAP-CTRL-001",
+      "status": "pass",
+      "notes": "Evidence objects are hashed and referenced from a chain head. Forensic bundle manifests include SHA-256 hashes for all included objects. Tamper simulation test passed: modifying one artifact caused chain verification to fail as expected.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-001-001",
+          "description": "Forensic bundle manifest with hashes for Q1 2026 evidence objects",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/q1-2026-bundle-manifest.json",
+          "sha256": null,
+          "artifact_type": "document"
+        },
+        {
+          "artifact_id": "ART-001-002",
+          "description": "Tamper simulation test result — verification failure confirmed on modified artifact",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/tamper-sim-result.txt",
+          "sha256": null,
+          "artifact_type": "test_result"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-002",
+      "status": "pass",
+      "notes": "Signing keys managed in EnterpriseKMS Corp v4.2.1 (FIPS 140-2 Level 2 HSM). Annual rotation schedule documented and last rotation confirmed 2025-12-01. Compromise procedure covers revocation, trust discontinuity signaling, and re-anchoring.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-002-001",
+          "description": "KMS configuration documentation excerpt showing key management policy",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/kms-config-summary.md",
+          "artifact_type": "document"
+        },
+        {
+          "artifact_id": "ART-002-002",
+          "description": "Key rotation schedule and last rotation confirmation",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/key-rotation-log.txt",
+          "artifact_type": "log"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-003",
+      "status": "pass",
+      "notes": "Verification guide published in docs/artifact-model.md. An independent verification exercise was completed on 2026-02-20 using only open-source tooling (sha256sum, jq). Outcome: all chain head references confirmed.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-003-001",
+          "description": "Verification guide — docs/artifact-model.md section on independent verification",
+          "path_or_url": "docs/artifact-model.md",
+          "artifact_type": "document"
+        },
+        {
+          "artifact_id": "ART-003-002",
+          "description": "Independent verification exercise completion record — 2026-02-20",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/independent-verify-record.md",
+          "artifact_type": "document"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-004",
+      "status": "pass",
+      "notes": "Evidence objects include event_time, monotonic_time, sequence_number, and producer identity. Schema validation confirms field presence on all objects in the Q1 2026 evidence set.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-004-001",
+          "description": "Sample evidence object showing all four required fields",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/sample-evidence-object.json",
+          "artifact_type": "document"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-005",
+      "status": "not_applicable",
+      "notes": "EAP-CTRL-005 (Declared ordering model) is not required at EAP-L1 per the EAP-L1-overlay. Not applicable.",
+      "evidence_artifacts": []
+    },
+    {
+      "control_id": "EAP-CTRL-006",
+      "status": "not_applicable",
+      "notes": "EAP-CTRL-006 (Replay and duplication detection) is not applicable at EAP-L1 per the overlay.",
+      "evidence_artifacts": []
+    },
+    {
+      "control_id": "EAP-CTRL-007",
+      "status": "pass",
+      "notes": "Network policy restricts all tool/API endpoints to the ATAL enforcement gateway. Identity policy blocks direct invocation paths. Network policy configuration inspected and confirmed 2026-03-01.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-007-001",
+          "description": "Network policy configuration summary (sanitized for external review)",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/network-policy-summary.md",
+          "artifact_type": "configuration"
+        },
+        {
+          "artifact_id": "ART-007-002",
+          "description": "Identity policy configuration documentation",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/identity-policy-summary.md",
+          "artifact_type": "configuration"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-008",
+      "status": "pass",
+      "notes": "All gateway policy changes versioned in Git with mandatory peer review via pull request. Change log reviewed for Q1 2026: 3 changes, all peer-reviewed and recorded as governance events in the internal ITSM system.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-008-001",
+          "description": "Change log extract for enforcement layer Q1 2026 — 3 changes with review records",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/change-log-q1-2026.md",
+          "artifact_type": "log"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-009",
+      "status": "not_applicable",
+      "notes": "EAP-CTRL-009 (Threat model declaration) is mandatory only at EAP-L3. Not applicable at EAP-L1.",
+      "evidence_artifacts": []
+    },
+    {
+      "control_id": "EAP-CTRL-010",
+      "status": "pass",
+      "notes": "Structured redaction applied to PII and HR-Sensitive fields using deterministic redaction with integrity-preserving references. Field-level protection confirmed via sample evidence object review.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-010-001",
+          "description": "Sample evidence object showing redacted PII fields with integrity references",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/sample-evidence-object.json",
+          "artifact_type": "document"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-011",
+      "status": "pass",
+      "notes": "Evidence access governed by least-privilege role model. Auditor sessions are time-bounded to 4 hours by default. Access logs retained and reviewed quarterly. Export requires Evidence Custodian approval.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-011-001",
+          "description": "Evidence access role definitions and access control policy",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/evidence-access-policy.md",
+          "artifact_type": "document"
+        },
+        {
+          "artifact_id": "ART-011-002",
+          "description": "Sample access log showing time-bounded auditor session",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/access-log-sample.txt",
+          "artifact_type": "log"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-012",
+      "status": "pass",
+      "notes": "Retention policy documented covering PII (2 years), HR-Sensitive (5 years), Internal (1 year). Jurisdictional alignment to EU GDPR documented. Deletion and archival procedures defined.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-012-001",
+          "description": "Data retention policy document covering risk class, classification, and jurisdiction",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/retention-policy.md",
+          "artifact_type": "document"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-013",
+      "status": "not_applicable",
+      "notes": "EAP-CTRL-013 (Evidence store incident posture) is mandatory only at EAP-L3. Not applicable at EAP-L1.",
+      "evidence_artifacts": []
+    },
+    {
+      "control_id": "EAP-CTRL-014",
+      "status": "pass",
+      "notes": "Quarterly bypass test suite completed 2026-03-10. All five required scenarios tested. All bypass attempts were blocked and detection was confirmed. Results documented and linked to governance events.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-014-001",
+          "description": "Q1 2026 bypass test suite results — all scenarios pass",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/bypass-test-q1-2026.md",
+          "artifact_type": "test_result"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-015",
+      "status": "pass",
+      "notes": "Annual reconstruction drill completed 2026-02-28. Incident scenario: unauthorized delegation attempt on 2025-11-15. Drill reconstructed full causal path from evidence only. Outcome: successful. No gaps found.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-015-001",
+          "description": "Reconstruction drill completion record — 2026-02-28",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/reconstruction-drill-record.md",
+          "artifact_type": "document"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-016",
+      "status": "not_applicable",
+      "notes": "EAP-CTRL-016 (Kill-switch test and dual-control) is not applicable at EAP-L1 per the overlay.",
+      "evidence_artifacts": []
+    },
+    {
+      "control_id": "EAP-CTRL-017",
+      "status": "pass",
+      "notes": "Operator-of-Record (OOR), Approver-of-Record (AOR), Policy Owner, and Evidence Custodian roles defined and assigned. OOR identity captured on all high-impact actions.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-017-001",
+          "description": "Role definitions and current role assignment table",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/role-assignments.md",
+          "artifact_type": "document"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-018",
+      "status": "pass",
+      "notes": "Policy Owner and Evidence Custodian are distinct identities. OOR and AOR are distinct for higher-risk actions. Basic SoD confirmed via role assignment review.",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-018-001",
+          "description": "SoD confirmation — role assignment review showing distinct identities",
+          "path_or_url": "examples/eap-l1-worked-example/artifacts/role-assignments.md",
+          "artifact_type": "document"
+        }
+      ]
+    },
+    {
+      "control_id": "EAP-CTRL-019",
+      "status": "not_applicable",
+      "notes": "EAP-CTRL-019 (Dual control for high-impact actions) is mandatory only at EAP-L3. Not applicable at EAP-L1.",
+      "evidence_artifacts": []
+    },
+    {
+      "control_id": "EAP-CTRL-020",
+      "status": "not_applicable",
+      "notes": "EAP-CTRL-020 (Vendor and integration dependency documentation) is not required at EAP-L1 per the overlay.",
+      "evidence_artifacts": []
+    }
+  ],
+  "exception_refs": []
+}

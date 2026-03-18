@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/exception-waiver.schema.json",
+  "_template_note": "Copy this file, replace all PLACEHOLDER values, and retain it alongside your evidence bundle. Remove this _template_note field before use.",
+  "waiver_id": "WAIVER-PLACEHOLDER",
+  "control_id": "EAP-CTRL-NNN",
+  "assurance_level": "EAP-L1",
+  "rationale": "PLACEHOLDER — explain why the control cannot be met in full for this deployment context",
+  "compensating_measures": [
+    "PLACEHOLDER — describe measure 1",
+    "PLACEHOLDER — describe measure 2"
+  ],
+  "risk_acceptance": {
+    "residual_risk_description": "PLACEHOLDER — describe what residual risk remains after compensating measures",
+    "accepted_by": "PLACEHOLDER — name or role of risk owner",
+    "risk_level": "PLACEHOLDER (critical | high | medium | low)"
+  },
+  "approved_by": "PLACEHOLDER — approver name or role",
+  "approval_date": "YYYY-MM-DD",
+  "expiry_date": "YYYY-MM-DD",
+  "review_date": "YYYY-MM-DD",
+  "notes": "PLACEHOLDER — any additional context or references"
+}

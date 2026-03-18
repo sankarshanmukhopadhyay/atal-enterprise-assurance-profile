@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/assessment-result.schema.json",
+  "_template_note": "Copy this file, replace all PLACEHOLDER values, and populate control_results for each control in the target overlay. Remove this _template_note field before use.",
+  "assessment_id": "PLACEHOLDER-assessment-id",
+  "assurance_level": "EAP-L1",
+  "assessment_date": "YYYY-MM-DD",
+  "assessor": "PLACEHOLDER — name or role of assessor",
+  "target_profile_ref": "catalogs/assurance-level-overlays/EAP-L1-overlay.json",
+  "evidence_bundle_ref": "PLACEHOLDER — path to evidence bundle JSON",
+  "control_results": [
+    {
+      "control_id": "EAP-CTRL-NNN",
+      "result": "PLACEHOLDER (pass | fail | partial | not_applicable | waived)",
+      "finding": "PLACEHOLDER — brief finding statement if result is not 'pass'",
+      "remediation": "PLACEHOLDER — planned remediation if applicable",
+      "waiver_ref": "PLACEHOLDER — waiver ID if result is 'waived', otherwise omit"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "FINDING-001",
+      "control_id": "EAP-CTRL-NNN",
+      "severity": "PLACEHOLDER (critical | high | medium | low | informational)",
+      "description": "PLACEHOLDER — detailed finding description",
+      "remediation_target_date": "YYYY-MM-DD"
+    }
+  ],
+  "residual_risks": [
+    {
+      "risk_id": "RISK-001",
+      "description": "PLACEHOLDER — residual risk description",
+      "related_control_ids": ["EAP-CTRL-NNN"],
+      "accepted_by": "PLACEHOLDER — risk owner",
+      "acceptance_date": "YYYY-MM-DD"
+    }
+  ],
+  "decision": {
+    "outcome": "PLACEHOLDER (conformant | non_conformant | conditionally_conformant)",
+    "summary": "PLACEHOLDER — one or two sentence decision summary",
+    "conditions": [
+      "PLACEHOLDER — condition 1 if conditionally_conformant, otherwise remove"
+    ],
+    "valid_until": "YYYY-MM-DD"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "atal-eap/schemas/exception-waiver.schema.json",
+  "title": "EAP Exception Waiver Schema",
+  "description": "Validates an exception waiver record for controls that cannot be met at the assessed assurance level.",
+  "type": "object",
+  "required": [
+    "waiver_id", "control_id", "assurance_level",
+    "rationale", "compensating_measures", "risk_acceptance",
+    "approved_by", "approval_date", "expiry_date"
+  ],
+  "properties": {
+    "waiver_id": { "type": "string" },
+    "control_id": { "type": "string", "pattern": "^EAP-CTRL-\\d{3}$" },
+    "assurance_level": {
+      "type": "string",
+      "enum": ["EAP-L1", "EAP-L2", "EAP-L3"]
+    },
+    "rationale": { "type": "string" },
+    "compensating_measures": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "risk_acceptance": {
+      "type": "object",
+      "required": ["residual_risk_description", "accepted_by"],
+      "properties": {
+        "residual_risk_description": { "type": "string" },
+        "accepted_by": { "type": "string" },
+        "risk_level": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "approved_by": { "type": "string" },
+    "approval_date": { "type": "string", "format": "date" },
+    "expiry_date": { "type": "string", "format": "date" },
+    "review_date": { "type": "string", "format": "date" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": true
+}

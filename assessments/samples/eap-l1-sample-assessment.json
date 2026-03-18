@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schemas/assessment-result.schema.json",
+  "assessment_id": "assess-eap-l1-sample-001",
+  "assurance_level": "EAP-L1",
+  "assessment_date": "2026-03-18",
+  "assessor": "Jordan Lee, Evidence Custodian",
+  "target_profile_ref": "catalogs/assurance-level-overlays/EAP-L1-overlay.json",
+  "evidence_bundle_ref": "evidence/samples/eap-l1-sample-evidence-bundle.json",
+  "control_results": [
+    { "control_id": "EAP-CTRL-001", "result": "pass" },
+    { "control_id": "EAP-CTRL-002", "result": "pass" },
+    { "control_id": "EAP-CTRL-003", "result": "pass" },
+    { "control_id": "EAP-CTRL-004", "result": "pass" },
+    { "control_id": "EAP-CTRL-005", "result": "not_applicable" },
+    { "control_id": "EAP-CTRL-006", "result": "not_applicable" },
+    { "control_id": "EAP-CTRL-007", "result": "pass" },
+    { "control_id": "EAP-CTRL-008", "result": "pass" },
+    { "control_id": "EAP-CTRL-009", "result": "not_applicable" },
+    { "control_id": "EAP-CTRL-010", "result": "pass" },
+    { "control_id": "EAP-CTRL-011", "result": "pass" },
+    { "control_id": "EAP-CTRL-012", "result": "pass" },
+    { "control_id": "EAP-CTRL-013", "result": "not_applicable" },
+    { "control_id": "EAP-CTRL-014", "result": "pass" },
+    { "control_id": "EAP-CTRL-015", "result": "pass" },
+    { "control_id": "EAP-CTRL-016", "result": "not_applicable" },
+    { "control_id": "EAP-CTRL-017", "result": "pass" },
+    { "control_id": "EAP-CTRL-018", "result": "pass" },
+    { "control_id": "EAP-CTRL-019", "result": "not_applicable" },
+    { "control_id": "EAP-CTRL-020", "result": "not_applicable" }
+  ],
+  "findings": [],
+  "residual_risks": [],
+  "decision": {
+    "outcome": "conformant",
+    "summary": "All mandatory EAP-L1 controls pass. All non-applicable controls are correctly marked per the EAP-L1-overlay. No findings, no waivers, no residual risks. The system is assessed as conformant with EAP-L1 (Enterprise Baseline).",
+    "conditions": [],
+    "valid_until": "2027-03-18"
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "$schema": "../../schemas/assurance-profile.schema.json",
+  "overlay_id": "EAP-L2-overlay",
+  "assurance_level": "EAP-L2",
+  "title": "EAP-L2 — Controlled Autonomy Overlay",
+  "version": "0.2.0",
+  "description": "Machine-readable overlay defining the control applicability, evidence tightening, and dependency rules for EAP-L2 (Controlled Autonomy). Intended use: tool-using agents, persistent memory, production workflows.",
+  "applicable_controls": [
+    {
+      "control_id": "EAP-CTRL-001",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Full append-only hash-chained log with signed bundle manifests required at L2.",
+      "evidence_tightening": ["Signed bundle manifests required", "Hash-chained log required (not simplified chain)"],
+      "dependency_rules": ["EAP-CTRL-002", "EAP-CTRL-003"]
+    },
+    {
+      "control_id": "EAP-CTRL-002",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "KMS/HSM custody + documented rotation and compromise procedure required.",
+      "evidence_tightening": ["Rotation schedule and compromise procedure required"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-003",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Vendor-independent verification steps must be documented.",
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-004",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "All four required event fields must be present.",
+      "evidence_tightening": ["sequence_number per producer AND monotonic time both required"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-005",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": null,
+      "evidence_tightening": null,
+      "dependency_rules": ["EAP-CTRL-004"]
+    },
+    {
+      "control_id": "EAP-CTRL-006",
+      "applicable": true,
+      "normative_strength_override": "SHOULD",
+      "note": "SHOULD at L2; MUST at L3.",
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-007",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Network-level and identity-level controls both required.",
+      "evidence_tightening": ["Network-level AND identity-level controls, not application logic alone"],
+      "dependency_rules": ["EAP-CTRL-008"]
+    },
+    {
+      "control_id": "EAP-CTRL-008",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Change control on gateways, registries, evaluators, and safety kernel configs.",
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-009",
+      "applicable": false,
+      "normative_strength_override": null,
+      "note": "Not applicable at L2.",
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-010",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Field-level encryption or structured redaction required.",
+      "evidence_tightening": ["Field-level encryption or structured redaction (not documentation alone)"],
+      "dependency_rules": ["EAP-CTRL-011"]
+    },
+    {
+      "control_id": "EAP-CTRL-011",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Time-boxed auditor sessions and controlled export required.",
+      "evidence_tightening": ["Time-bounded access sessions required", "Auditor access logs required"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-012",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Retention-by-risk-class policy required.",
+      "evidence_tightening": ["Risk class, data classification, and jurisdictional obligations all required"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-013",
+      "applicable": false,
+      "normative_strength_override": null,
+      "note": "Not applicable at L2.",
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-014",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Quarterly bypass test suite required.",
+      "evidence_tightening": ["Quarterly cadence required", "All five bypass scenarios must be covered"],
+      "dependency_rules": ["EAP-CTRL-007", "EAP-CTRL-008"]
+    },
+    {
+      "control_id": "EAP-CTRL-015",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Reconstruction drill every 6 months required.",
+      "evidence_tightening": ["At least every 6 months (not annually)", "One drill per year must be documented"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-016",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Kill-switch tabletop plus controlled exercise annually.",
+      "evidence_tightening": ["Tabletop AND controlled exercise both required at L2"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-017",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Approver-of-Record and Evidence Custodian role definitions required.",
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-018",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "OOR and AOR must be distinct identities for higher-risk actions.",
+      "evidence_tightening": ["OOR/AOR distinction must be enforced, not just documented"],
+      "dependency_rules": ["EAP-CTRL-017"]
+    },
+    {
+      "control_id": "EAP-CTRL-019",
+      "applicable": false,
+      "normative_strength_override": null,
+      "note": "Not applicable at L2.",
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-020",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": null,
+      "evidence_tightening": null,
+      "dependency_rules": []
+    }
+  ],
+  "mandatory_control_ids": [
+    "EAP-CTRL-001", "EAP-CTRL-002", "EAP-CTRL-003",
+    "EAP-CTRL-004", "EAP-CTRL-005",
+    "EAP-CTRL-007", "EAP-CTRL-008",
+    "EAP-CTRL-010", "EAP-CTRL-011", "EAP-CTRL-012",
+    "EAP-CTRL-014", "EAP-CTRL-015", "EAP-CTRL-016",
+    "EAP-CTRL-017", "EAP-CTRL-018", "EAP-CTRL-020"
+  ],
+  "pass_criteria": "All mandatory controls assessed as 'pass' or 'waived' with documented waiver. SHOULD controls documented with rationale if not met."
+}

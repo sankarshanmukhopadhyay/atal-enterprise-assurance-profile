@@ -1,0 +1,207 @@
+{
+  "$schema": "../../schemas/assurance-profile.schema.json",
+  "overlay_id": "EAP-L3-overlay",
+  "assurance_level": "EAP-L3",
+  "title": "EAP-L3 — High Assurance Overlay",
+  "version": "0.2.0",
+  "description": "Machine-readable overlay defining the control applicability, evidence tightening, and dependency rules for EAP-L3 (High Assurance). Intended use: high-impact autonomy in safety, security, financial, and critical operations environments.",
+  "applicable_controls": [
+    {
+      "control_id": "EAP-CTRL-001",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "External witnessing or anchoring for evidence chain heads strongly recommended.",
+      "evidence_tightening": [
+        "Append-only hash-chained log with signed manifests required",
+        "Independent verification tooling or process must be documented",
+        "External anchoring or transparency log recommended (SHOULD)"
+      ],
+      "dependency_rules": ["EAP-CTRL-002", "EAP-CTRL-003"]
+    },
+    {
+      "control_id": "EAP-CTRL-002",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Strict rotation schedule and documented compromise playbook required.",
+      "evidence_tightening": ["Compromise playbook must include re-anchoring procedure"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-003",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Independent verification tooling or documented process required.",
+      "evidence_tightening": ["Verification must be exercised, not only documented"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-004",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Monotonic sequencing and cross-node ordering strategy required.",
+      "evidence_tightening": ["Monotonic sequencing required (not just wall clock)"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-005",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Declared cross-node ordering strategy required.",
+      "evidence_tightening": null,
+      "dependency_rules": ["EAP-CTRL-004"]
+    },
+    {
+      "control_id": "EAP-CTRL-006",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Replay detection must be demonstrated, not only documented.",
+      "evidence_tightening": ["Test result showing replay detection in controlled conditions required"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-007",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Strict network policy; enforcement layer must be the only invocation path.",
+      "evidence_tightening": [
+        "Platform attestation expectations must be documented for safety kernel integrity where feasible",
+        "Explicit threat model boundaries required (see EAP-CTRL-009)"
+      ],
+      "dependency_rules": ["EAP-CTRL-008", "EAP-CTRL-009"]
+    },
+    {
+      "control_id": "EAP-CTRL-008",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": null,
+      "evidence_tightening": null,
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-009",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "All four attacker class categories must be addressed.",
+      "evidence_tightening": [
+        "External, insider, compromised host, and supply chain attacker classes all required",
+        "Out-of-scope boundaries must be explicitly declared"
+      ],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-010",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Field-level encryption plus redaction-by-class required.",
+      "evidence_tightening": [
+        "Field-level encryption required (not redaction alone)",
+        "Export controls and watermarking recommended"
+      ],
+      "dependency_rules": ["EAP-CTRL-011"]
+    },
+    {
+      "control_id": "EAP-CTRL-011",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Audited evidence access with export controls required.",
+      "evidence_tightening": ["Export controls and access logs must be auditable"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-012",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Retention policy must align to jurisdiction and criticality.",
+      "evidence_tightening": ["Jurisdictional alignment must be documented explicitly"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-013",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": null,
+      "evidence_tightening": ["Tabletop exercise for evidence store breach scenario required"],
+      "dependency_rules": ["EAP-CTRL-011"]
+    },
+    {
+      "control_id": "EAP-CTRL-014",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Quarterly adversarial bypass tests plus registry tampering simulations required.",
+      "evidence_tightening": [
+        "Quarterly cadence required",
+        "Registry tampering simulation scenario required (in addition to L2 scenarios)"
+      ],
+      "dependency_rules": ["EAP-CTRL-007", "EAP-CTRL-008"]
+    },
+    {
+      "control_id": "EAP-CTRL-015",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Semi-annual drills; at least one must assume vendor tooling unavailable.",
+      "evidence_tightening": [
+        "Semi-annual cadence required",
+        "At least one drill per cycle must assume vendor dashboards or tooling unavailable"
+      ],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-016",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Dual-control enforced; live-fire exercise in controlled environment required.",
+      "evidence_tightening": [
+        "Dual-control must be enforced, not only documented",
+        "Live-fire exercise (not just tabletop) required",
+        "Evidence export and integrity verification post-exercise required"
+      ],
+      "dependency_rules": ["EAP-CTRL-019"]
+    },
+    {
+      "control_id": "EAP-CTRL-017",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Three-way role separation required.",
+      "evidence_tightening": ["Policy Owner, Safety Kernel Operator, and Evidence Custodian must all be distinct"],
+      "dependency_rules": []
+    },
+    {
+      "control_id": "EAP-CTRL-018",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": "Full three-way SoD required.",
+      "evidence_tightening": [
+        "Policy Owner, Safety Kernel Operator, and Evidence Custodian separation all required"
+      ],
+      "dependency_rules": ["EAP-CTRL-017"]
+    },
+    {
+      "control_id": "EAP-CTRL-019",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": null,
+      "evidence_tightening": [
+        "Dual-control configuration must be enforced at the system level",
+        "Evidence of two distinct authorizing identities required for each covered action"
+      ],
+      "dependency_rules": ["EAP-CTRL-018"]
+    },
+    {
+      "control_id": "EAP-CTRL-020",
+      "applicable": true,
+      "normative_strength_override": "MUST",
+      "note": null,
+      "evidence_tightening": ["Supply chain attacker class must be addressed in threat model (see EAP-CTRL-009)"],
+      "dependency_rules": ["EAP-CTRL-009"]
+    }
+  ],
+  "mandatory_control_ids": [
+    "EAP-CTRL-001", "EAP-CTRL-002", "EAP-CTRL-003",
+    "EAP-CTRL-004", "EAP-CTRL-005", "EAP-CTRL-006",
+    "EAP-CTRL-007", "EAP-CTRL-008", "EAP-CTRL-009",
+    "EAP-CTRL-010", "EAP-CTRL-011", "EAP-CTRL-012", "EAP-CTRL-013",
+    "EAP-CTRL-014", "EAP-CTRL-015", "EAP-CTRL-016",
+    "EAP-CTRL-017", "EAP-CTRL-018", "EAP-CTRL-019", "EAP-CTRL-020"
+  ],
+  "pass_criteria": "All 20 controls assessed as 'pass' or 'waived' with documented waiver and residual risk acceptance. SHOULD controls documented with rationale if not met."
+}

@@ -1,0 +1,16 @@
+{
+  "_template_note": "This template represents a single control_evidence_item entry to be embedded in an evidence bundle. Copy and populate one per assessed control.",
+  "control_id": "EAP-CTRL-NNN",
+  "status": "PLACEHOLDER (pass | fail | partial | not_applicable | waived)",
+  "notes": "PLACEHOLDER — describe how evidence was gathered and any gaps",
+  "exception_ref": "PLACEHOLDER waiver ID if status is 'waived', otherwise omit",
+  "evidence_artifacts": [
+    {
+      "artifact_id": "ART-NNN-001",
+      "description": "PLACEHOLDER — human-readable description of what this artifact demonstrates",
+      "path_or_url": "PLACEHOLDER — relative path from repo root or external URL",
+      "sha256": "PLACEHOLDER — 64-character lowercase hex SHA-256 of the artifact, or omit",
+      "artifact_type": "PLACEHOLDER — one of: log, document, test_result, configuration, screenshot, export"
+    }
+  ]
+}

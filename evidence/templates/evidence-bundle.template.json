@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schemas/evidence-bundle.schema.json",
+  "_template_note": "Copy this file, replace all PLACEHOLDER values, and populate control_evidence_items for your target assurance level. Remove this _template_note field before use.",
+  "bundle_id": "PLACEHOLDER-bundle-id",
+  "assurance_level": "EAP-L1",
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "assessment_period": {
+    "start": "YYYY-MM-DD",
+    "end": "YYYY-MM-DD"
+  },
+  "assessed_system": {
+    "name": "PLACEHOLDER system name",
+    "version": "PLACEHOLDER version",
+    "environment": "PLACEHOLDER (e.g. production, staging)",
+    "deployment_context_ref": "PLACEHOLDER path to deployment-context.json"
+  },
+  "attestation": {
+    "attested_by": "PLACEHOLDER name or identity",
+    "attestation_date": "YYYY-MM-DD",
+    "attestation_role": "PLACEHOLDER (e.g. Evidence Custodian)",
+    "signature": "PLACEHOLDER or omit if not signed"
+  },
+  "control_evidence_items": [
+    {
+      "control_id": "EAP-CTRL-001",
+      "status": "PLACEHOLDER (pass | fail | partial | not_applicable | waived)",
+      "notes": "PLACEHOLDER notes on evidence adequacy",
+      "evidence_artifacts": [
+        {
+          "artifact_id": "ART-001",
+          "description": "PLACEHOLDER description of the artifact",
+          "path_or_url": "PLACEHOLDER relative path or URL",
+          "sha256": "PLACEHOLDER 64-char hex hash or omit",
+          "artifact_type": "PLACEHOLDER (e.g. log, document, test_result)"
+        }
+      ]
+    }
+  ],
+  "exception_refs": []
+}

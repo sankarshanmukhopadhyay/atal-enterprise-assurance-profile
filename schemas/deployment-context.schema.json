@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "atal-eap/schemas/deployment-context.schema.json",
+  "title": "EAP Deployment Context Schema",
+  "description": "Validates deployment context metadata that conditions how a particular assurance level applies to a given system.",
+  "type": "object",
+  "required": ["context_id", "system_name", "sector", "autonomy_tier", "oversight_mode", "assurance_level_target"],
+  "properties": {
+    "context_id": { "type": "string" },
+    "system_name": { "type": "string" },
+    "sector": { "type": "string" },
+    "autonomy_tier": {
+      "type": "string",
+      "enum": ["assisted", "partial", "conditional", "high"]
+    },
+    "oversight_mode": {
+      "type": "string",
+      "enum": ["human_in_the_loop", "human_on_the_loop", "human_out_of_the_loop"]
+    },
+    "assurance_level_target": {
+      "type": "string",
+      "enum": ["EAP-L1", "EAP-L2", "EAP-L3"]
+    },
+    "deployment_environment": { "type": "string" },
+    "vendor_dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["vendor", "component", "version"],
+        "properties": {
+          "vendor": { "type": "string" },
+          "component": { "type": "string" },
+          "version": { "type": "string" },
+          "assurance_claims": { "type": "string" }
+        }
+      }
+    },
+    "data_classifications": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "jurisdictions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": true
+}

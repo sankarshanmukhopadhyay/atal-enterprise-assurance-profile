@@ -1,0 +1,225 @@
+{
+  "assurance_level": "EAP-L1",
+  "checklist": [
+    {
+      "control_id": "EAP-CTRL-001",
+      "title": "Integrity-protected evidence chain",
+      "family": "Evidence and Assurance",
+      "applicable": true,
+      "normative_strength": "MUST",
+      "mandatory": true,
+      "criticality": "critical",
+      "note": "Simplified chain acceptable at L1. Full append-only hash-chained log required at L2+.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-002",
+      "title": "Key custody and rotation",
+      "family": "Evidence and Assurance",
+      "applicable": true,
+      "normative_strength": "MUST",
+      "mandatory": true,
+      "criticality": "high",
+      "note": "",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-003",
+      "title": "Verifier independence",
+      "family": "Evidence and Assurance",
+      "applicable": true,
+      "normative_strength": "MUST",
+      "mandatory": true,
+      "criticality": "high",
+      "note": "",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-004",
+      "title": "Minimum event fields for evidence objects",
+      "family": "Governance",
+      "applicable": true,
+      "normative_strength": "SHOULD",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "SHOULD at L1; MUST at L2+.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-005",
+      "title": "Declared ordering model",
+      "family": "Governance",
+      "applicable": false,
+      "normative_strength": "N/A",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "Not applicable at L1.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-006",
+      "title": "Replay and duplication detection",
+      "family": "Security",
+      "applicable": false,
+      "normative_strength": "N/A",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "Not applicable at L1.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-007",
+      "title": "Controlled invocation surface",
+      "family": "Enforcement",
+      "applicable": true,
+      "normative_strength": "MUST",
+      "mandatory": true,
+      "criticality": "critical",
+      "note": "",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-008",
+      "title": "Change control for enforcement layer",
+      "family": "Enforcement",
+      "applicable": true,
+      "normative_strength": "MUST",
+      "mandatory": true,
+      "criticality": "high",
+      "note": "",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-009",
+      "title": "Threat model declaration",
+      "family": "Governance",
+      "applicable": false,
+      "normative_strength": "N/A",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "Not applicable at L1.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-010",
+      "title": "Field-level privacy protection",
+      "family": "Security",
+      "applicable": true,
+      "normative_strength": "SHOULD",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "SHOULD at L1; MUST at L2+.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-011",
+      "title": "Auditor access governance",
+      "family": "Oversight",
+      "applicable": true,
+      "normative_strength": "MUST",
+      "mandatory": true,
+      "criticality": "high",
+      "note": "",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-012",
+      "title": "Retention-by-class policy",
+      "family": "Governance",
+      "applicable": true,
+      "normative_strength": "SHOULD",
+      "mandatory": false,
+      "criticality": "medium",
+      "note": "SHOULD at L1; MUST at L2+.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-013",
+      "title": "Evidence store incident posture",
+      "family": "Resilience",
+      "applicable": false,
+      "normative_strength": "N/A",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "Not applicable at L1.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-014",
+      "title": "Bypass test suite",
+      "family": "Forensics and Reconstruction",
+      "applicable": true,
+      "normative_strength": "SHOULD",
+      "mandatory": false,
+      "criticality": "critical",
+      "note": "SHOULD at L1; MUST at L2+.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-015",
+      "title": "Evidence reconstruction drill",
+      "family": "Forensics and Reconstruction",
+      "applicable": true,
+      "normative_strength": "SHOULD",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "Annually recommended at L1. At least twice yearly mandatory at L2+.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-016",
+      "title": "Kill-switch test and dual-control enforcement",
+      "family": "Resilience",
+      "applicable": false,
+      "normative_strength": "N/A",
+      "mandatory": false,
+      "criticality": "critical",
+      "note": "Not applicable at L1.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-017",
+      "title": "Operator-of-Record and Approver-of-Record role definitions",
+      "family": "Oversight",
+      "applicable": true,
+      "normative_strength": "MUST",
+      "mandatory": true,
+      "criticality": "high",
+      "note": "",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-018",
+      "title": "Separation of duties",
+      "family": "Oversight",
+      "applicable": true,
+      "normative_strength": "SHOULD",
+      "mandatory": false,
+      "criticality": "high",
+      "note": "Basic SoD between Policy Owner and Evidence Custodian recommended at L1; MUST at L2+.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-019",
+      "title": "Dual control for high-impact actions",
+      "family": "Oversight",
+      "applicable": false,
+      "normative_strength": "N/A",
+      "mandatory": false,
+      "criticality": "critical",
+      "note": "Not applicable at L1.",
+      "status": ""
+    },
+    {
+      "control_id": "EAP-CTRL-020",
+      "title": "Vendor and integration dependency documentation",
+      "family": "Vendor and Integration",
+      "applicable": false,
+      "normative_strength": "N/A",
+      "mandatory": false,
+      "criticality": "medium",
+      "note": "Not applicable at L1.",
+      "status": ""
+    }
+  ]
+}

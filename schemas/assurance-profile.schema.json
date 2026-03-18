@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "atal-eap/schemas/assurance-profile.schema.json",
+  "title": "EAP Assurance Profile / Overlay Schema",
+  "description": "Validates an EAP assurance-level overlay, defining which controls apply at a given level and any level-specific tightening.",
+  "type": "object",
+  "required": [
+    "overlay_id", "assurance_level", "title", "version",
+    "applicable_controls", "mandatory_control_ids", "pass_criteria"
+  ],
+  "properties": {
+    "overlay_id": { "type": "string" },
+    "assurance_level": {
+      "type": "string",
+      "enum": ["EAP-L1", "EAP-L2", "EAP-L3"]
+    },
+    "title": { "type": "string" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "description": { "type": "string" },
+    "applicable_controls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["control_id", "applicable", "normative_strength_override", "note", "evidence_tightening", "dependency_rules"],
+        "properties": {
+          "control_id": { "type": "string", "pattern": "^EAP-CTRL-\\d{3}$" },
+          "applicable": { "type": "boolean" },
+          "normative_strength_override": {
+            "oneOf": [
+              { "type": "string", "enum": ["MUST", "SHOULD", "MAY"] },
+              { "type": "null" }
+            ]
+          },
+          "note": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+          "evidence_tightening": {
+            "oneOf": [
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "null" }
+            ]
+          },
+          "dependency_rules": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^EAP-CTRL-\\d{3}$" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "mandatory_control_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^EAP-CTRL-\\d{3}$" }
+    },
+    "pass_criteria": { "type": "string" }
+  },
+  "additionalProperties": true
+}

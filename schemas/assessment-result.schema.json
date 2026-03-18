@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "atal-eap/schemas/assessment-result.schema.json",
+  "title": "EAP Assessment Result Schema",
+  "description": "Validates an EAP assessment result, capturing evaluated control results, findings, remediation items, residual risks, and the final conformance decision.",
+  "type": "object",
+  "required": [
+    "assessment_id", "assurance_level", "assessment_date",
+    "target_profile_ref", "evidence_bundle_ref",
+    "control_results", "decision"
+  ],
+  "properties": {
+    "assessment_id": { "type": "string" },
+    "assurance_level": {
+      "type": "string",
+      "enum": ["EAP-L1", "EAP-L2", "EAP-L3"]
+    },
+    "assessment_date": { "type": "string", "format": "date" },
+    "assessor": { "type": "string" },
+    "target_profile_ref": { "type": "string" },
+    "evidence_bundle_ref": { "type": "string" },
+    "control_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["control_id", "result"],
+        "properties": {
+          "control_id": { "type": "string", "pattern": "^EAP-CTRL-\\d{3}$" },
+          "result": {
+            "type": "string",
+            "enum": ["pass", "fail", "partial", "not_applicable", "waived"]
+          },
+          "finding": { "type": "string" },
+          "remediation": { "type": "string" },
+          "waiver_ref": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["finding_id", "control_id", "severity", "description"],
+        "properties": {
+          "finding_id": { "type": "string" },
+          "control_id": { "type": "string", "pattern": "^EAP-CTRL-\\d{3}$" },
+          "severity": { "type": "string", "enum": ["critical", "high", "medium", "low", "informational"] },
+          "description": { "type": "string" },
+          "remediation_target_date": { "type": "string", "format": "date" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "residual_risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["risk_id", "description", "accepted_by"],
+        "properties": {
+          "risk_id": { "type": "string" },
+          "description": { "type": "string" },
+          "related_control_ids": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^EAP-CTRL-\\d{3}$" }
+          },
+          "accepted_by": { "type": "string" },
+          "acceptance_date": { "type": "string", "format": "date" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["outcome"],
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": ["conformant", "non_conformant", "conditionally_conformant"]
+        },
+        "summary": { "type": "string" },
+        "conditions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "valid_until": { "type": "string", "format": "date" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
