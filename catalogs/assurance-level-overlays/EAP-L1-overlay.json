@@ -2,8 +2,8 @@
   "$schema": "../../schemas/assurance-profile.schema.json",
   "overlay_id": "EAP-L1-overlay",
   "assurance_level": "EAP-L1",
-  "title": "EAP-L1 — Enterprise Baseline Overlay",
-  "version": "0.2.0",
+  "title": "EAP-L1 \u2014 Enterprise Baseline Overlay",
+  "version": "0.3.0",
   "description": "Machine-readable overlay defining the control applicability, evidence tightening, and dependency rules for EAP-L1 (Enterprise Baseline). Intended use: internal copilots and constrained workflow assistance with low-to-medium impact actions.",
   "applicable_controls": [
     {
@@ -12,7 +12,10 @@
       "normative_strength_override": "MUST",
       "note": "Simplified chain acceptable at L1. Full append-only hash-chained log required at L2+.",
       "evidence_tightening": null,
-      "dependency_rules": ["EAP-CTRL-002", "EAP-CTRL-003"]
+      "dependency_rules": [
+        "EAP-CTRL-002",
+        "EAP-CTRL-003"
+      ]
     },
     {
       "control_id": "EAP-CTRL-002",
@@ -60,7 +63,9 @@
       "normative_strength_override": "MUST",
       "note": null,
       "evidence_tightening": null,
-      "dependency_rules": ["EAP-CTRL-008"]
+      "dependency_rules": [
+        "EAP-CTRL-008"
+      ]
     },
     {
       "control_id": "EAP-CTRL-008",
@@ -84,7 +89,9 @@
       "normative_strength_override": "SHOULD",
       "note": "SHOULD at L1; MUST at L2+.",
       "evidence_tightening": null,
-      "dependency_rules": ["EAP-CTRL-011"]
+      "dependency_rules": [
+        "EAP-CTRL-011"
+      ]
     },
     {
       "control_id": "EAP-CTRL-011",
@@ -168,8 +175,13 @@
     }
   ],
   "mandatory_control_ids": [
-    "EAP-CTRL-001", "EAP-CTRL-002", "EAP-CTRL-003",
-    "EAP-CTRL-007", "EAP-CTRL-008", "EAP-CTRL-011", "EAP-CTRL-017"
+    "EAP-CTRL-001",
+    "EAP-CTRL-002",
+    "EAP-CTRL-003",
+    "EAP-CTRL-007",
+    "EAP-CTRL-008",
+    "EAP-CTRL-011",
+    "EAP-CTRL-017"
   ],
   "pass_criteria": "All mandatory controls assessed as 'pass' or 'waived' with documented waiver. SHOULD controls documented with rationale if not met."
 }

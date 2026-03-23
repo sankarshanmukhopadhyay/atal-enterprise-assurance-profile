@@ -1,7 +1,7 @@
 # ATAL Enterprise Assurance Profile (EAP)
 
 [![Upstream: ATAL Standard](https://img.shields.io/badge/upstream-ATAL%20Standard-2ea44f)](https://github.com/Elytra-Security/atal-standard)
-[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](./changelog/CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](./changelog/CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
 [![Status](https://img.shields.io/badge/status-draft-yellow.svg)](./README.md)
 
@@ -34,17 +34,16 @@ This repository is an **Enterprise Assurance Profile (EAP)** that profiles and o
 
 ---
 
-## v0.2.0 — Operational Assurance Core
+## v0.3.0 — Operational Integrity and Quality Gates
 
-v0.2.0 transforms this repository from a descriptive assurance profile into a **portable operational assurance pack**. New in this release:
+v0.3.0 hardens this repository as a **self-checking, release-ready assurance toolkit**. New in this release:
 
-- **Control catalog** — 20 controls across 8 families, seeded from existing normative and test-harness material (`catalogs/`)
-- **Assurance-level overlays** — machine-readable applicability, strength tightening, and dependency rules per level (`catalogs/assurance-level-overlays/`)
-- **JSON Schemas** — for control catalog, assurance profile, evidence bundle, assessment result, deployment context, and exception waiver (`schemas/`)
-- **Evidence and assessment templates** — ready-to-use starting points for evidence collection and assessment (`evidence/templates/`, `assessments/templates/`)
-- **EAP-L1 worked example** — complete end-to-end sample demonstrating deployment context, evidence bundle, assessment result, and compiled report (`evidence/samples/`, `assessments/samples/`, `examples/eap-l1-worked-example/`)
-- **Script tooling** — 8 scripts for validation, checklist generation, coverage checking, report compilation, traceability generation, and export (`scripts/`)
-- **Documentation refresh** — operational model, artifact model, catalog design guide, and CLI usage reference (`docs/`)
+- **Repository quality gate** — canonical validation and artifact regeneration entrypoint via `scripts/run_quality_gate.py` and `make validate|build|all`
+- **Semantic integrity validation** — cross-artifact checks for catalog, overlays, dependency rules, mandatory control applicability, sample coverage, and JSON/YAML equivalence via `scripts/validate_repo_integrity.py`
+- **CI automation** — GitHub Actions workflow in `.github/workflows/validate.yml` that installs dependencies and runs the full quality gate on pushes and pull requests
+- **Dependency pinning** — `requirements.txt` for reproducible local and CI execution
+- **Maintainer guidance** — refreshed README and CLI usage, plus a release checklist for maintainers in `docs/maintainer-release-checklist.md`
+- **Regenerated artifacts** — checklists, traceability outputs, assessment report, and exports refreshed under `artifacts/` against the v0.3.0 catalog and overlays
 
 ---
 
@@ -53,37 +52,24 @@ v0.2.0 transforms this repository from a descriptive assurance profile into a **
 Install dependencies:
 
 ```bash
-pip install jsonschema pyyaml openpyxl
+pip install -r requirements.txt
 ```
 
-Run the complete EAP-L1 sample path:
+Run the full repository quality gate:
 
 ```bash
-# Validate the catalog
-python scripts/validate_catalog.py catalogs/atal-eap-control-catalog.json
-
-# Generate the L1 checklist
-python scripts/generate_profile_checklist.py --level EAP-L1
-
-# Validate the sample evidence bundle
-python scripts/validate_evidence_bundle.py evidence/samples/eap-l1-sample-evidence-bundle.json
-
-# Check all mandatory controls are covered
-python scripts/check_required_controls.py \
-  --level EAP-L1 \
-  --bundle evidence/samples/eap-l1-sample-evidence-bundle.json
-
-# Compile the assessment report
-python scripts/compile_assessment_report.py \
-  --level EAP-L1 \
-  --bundle evidence/samples/eap-l1-sample-evidence-bundle.json \
-  --result assessments/samples/eap-l1-sample-assessment.json
-
-# Export the catalog to XLSX
-python scripts/export_csv_xlsx.py --source catalog
+python scripts/run_quality_gate.py --mode all
 ```
 
-All generated outputs land in `artifacts/`. See `docs/cli-usage.md` for the full command reference.
+Or use the Make targets:
+
+```bash
+make validate
+make build
+make all
+```
+
+This validates the catalog in JSON and YAML form, runs semantic repository integrity checks, verifies the sample evidence bundle and assessment result, checks mandatory controls, and regenerates all checked-in outputs in `artifacts/`. See `docs/cli-usage.md` for the full command reference.
 
 ---
 
@@ -137,7 +123,7 @@ This EAP is a conformance layer on top of ATAL, not a fork. Every control in the
 
 ## Status
 
-Draft. Intended for peer review and iteration against ATAL releases.
+Draft. Intended for peer review and iteration against ATAL releases. v0.3.0 adds repository integrity checks, CI quality gates, and a reproducible maintainer workflow.
 
 ## License
 

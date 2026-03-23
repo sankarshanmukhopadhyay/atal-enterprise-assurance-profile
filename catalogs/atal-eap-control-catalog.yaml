@@ -1,6 +1,7 @@
+$schema: ../schemas/control-catalog.schema.json
 catalog_id: atal-eap-control-catalog
 title: ATAL Enterprise Assurance Profile — Control Catalog
-version: 0.2.0
+version: 0.3.0
 release_date: '2026-03-18'
 description: Canonical machine-readable control catalog for the ATAL Enterprise Assurance
   Profile (EAP). Controls are organized into families and are the authoritative source

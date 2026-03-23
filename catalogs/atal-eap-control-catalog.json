@@ -1,11 +1,11 @@
 {
   "$schema": "../schemas/control-catalog.schema.json",
   "catalog_id": "atal-eap-control-catalog",
-  "title": "ATAL Enterprise Assurance Profile — Control Catalog",
-  "version": "0.2.0",
+  "title": "ATAL Enterprise Assurance Profile \u2014 Control Catalog",
+  "version": "0.3.0",
   "release_date": "2026-03-18",
   "description": "Canonical machine-readable control catalog for the ATAL Enterprise Assurance Profile (EAP). Controls are organized into families and are the authoritative source for all assurance-level overlays, checklists, and assessment activities.",
-  "upstream_standard": "ATAL Standard — https://github.com/Elytra-Security/atal-standard",
+  "upstream_standard": "ATAL Standard \u2014 https://github.com/Elytra-Security/atal-standard",
   "status": "draft",
   "controls": [
     {
@@ -14,20 +14,41 @@
       "family": "Evidence and Assurance",
       "statement": "Evidence objects (decision records, trails, SML, EIT, CAG snapshots, manifests) MUST be covered by an integrity mechanism that provides tamper evidence, append-only semantics, and deterministic verification steps.",
       "rationale": "Without a tamper-evident evidence chain, assertions about past system behavior cannot be trusted in audit or incident response settings.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "technical",
       "criticality": "critical",
-      "test_methods": ["artifact_inspection", "hash_verification", "chain_head_verification"],
+      "test_methods": [
+        "artifact_inspection",
+        "hash_verification",
+        "chain_head_verification"
+      ],
       "evidence_requirements": [
         "Forensic bundle manifest with hashes for all included objects",
         "Chain head reference recorded separately from the bundle",
         "Tamper simulation test result (modify one artifact and verify failure)"
       ],
-      "mapped_atal_references": ["Evidence integrity", "Forensic bundle verifiability"],
-      "mapped_repo_sources": ["normative/evidence-integrity.md#EAP-CRYPTO-1", "mappings/atal-eap-control-map.md"],
-      "related_risks": ["Evidence tampering", "Audit evidence repudiation", "Chain replay"],
-      "compensating_controls": ["EAP-CTRL-002", "EAP-CTRL-003"],
+      "mapped_atal_references": [
+        "Evidence integrity",
+        "Forensic bundle verifiability"
+      ],
+      "mapped_repo_sources": [
+        "normative/evidence-integrity.md#EAP-CRYPTO-1",
+        "mappings/atal-eap-control-map.md"
+      ],
+      "related_risks": [
+        "Evidence tampering",
+        "Audit evidence repudiation",
+        "Chain replay"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-002",
+        "EAP-CTRL-003"
+      ],
       "automation_candidate": true
     },
     {
@@ -36,19 +57,37 @@
       "family": "Evidence and Assurance",
       "statement": "Signing keys MUST be managed by enterprise-grade key management (KMS/HSM). Rotation schedules MUST be documented. Compromise procedures MUST include key revocation, trust discontinuity signaling, and chain re-anchoring guidance.",
       "rationale": "Keys managed outside enterprise key stores are exposed to application-level compromise, negating evidence integrity guarantees.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["documentation_review", "kms_configuration_inspection", "rotation_log_audit"],
+      "test_methods": [
+        "documentation_review",
+        "kms_configuration_inspection",
+        "rotation_log_audit"
+      ],
       "evidence_requirements": [
         "KMS/HSM configuration documentation",
         "Key rotation schedule",
         "Compromise response procedure document"
       ],
-      "mapped_atal_references": ["Integrity requirements", "Audit readiness"],
-      "mapped_repo_sources": ["normative/evidence-integrity.md#EAP-CRYPTO-2", "mappings/atal-eap-control-map.md"],
-      "related_risks": ["Key compromise", "Evidence repudiation", "Audit trail invalidation"],
+      "mapped_atal_references": [
+        "Integrity requirements",
+        "Audit readiness"
+      ],
+      "mapped_repo_sources": [
+        "normative/evidence-integrity.md#EAP-CRYPTO-2",
+        "mappings/atal-eap-control-map.md"
+      ],
+      "related_risks": [
+        "Key compromise",
+        "Evidence repudiation",
+        "Audit trail invalidation"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -58,18 +97,34 @@
       "family": "Evidence and Assurance",
       "statement": "Evidence MUST be verifiable without proprietary vendor systems. A verification guide MUST document required inputs, verification steps, failure modes, and result interpretation.",
       "rationale": "Vendor-locked verification creates single points of failure in audit and incident response and prevents independent assurance.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["documentation_review", "independent_verification_exercise"],
+      "test_methods": [
+        "documentation_review",
+        "independent_verification_exercise"
+      ],
       "evidence_requirements": [
         "Verification guide document",
         "Evidence of at least one successful independent verification exercise"
       ],
-      "mapped_atal_references": ["Verifiable without proprietary systems", "Auditor portability"],
-      "mapped_repo_sources": ["normative/evidence-integrity.md#EAP-CRYPTO-3", "mappings/atal-eap-control-map.md"],
-      "related_risks": ["Auditor lock-in", "Verification failure under vendor unavailability"],
+      "mapped_atal_references": [
+        "Verifiable without proprietary systems",
+        "Auditor portability"
+      ],
+      "mapped_repo_sources": [
+        "normative/evidence-integrity.md#EAP-CRYPTO-3",
+        "mappings/atal-eap-control-map.md"
+      ],
+      "related_risks": [
+        "Auditor lock-in",
+        "Verification failure under vendor unavailability"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -79,19 +134,38 @@
       "family": "Governance",
       "statement": "Evidence objects MUST include event_time (wall clock), monotonic_time (node monotonic where available), sequence_number (per producer), and producer identity.",
       "rationale": "Without minimum temporal and identity fields, reconstructing causal ordering across distributed systems is unreliable and potentially unresolvable.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "technical",
       "criticality": "high",
-      "test_methods": ["schema_validation", "sample_artifact_inspection"],
+      "test_methods": [
+        "schema_validation",
+        "sample_artifact_inspection"
+      ],
       "evidence_requirements": [
         "Sample evidence objects demonstrating all required fields",
         "Schema or validation rule enforcing field presence"
       ],
-      "mapped_atal_references": ["Reconstructability", "Timestamps"],
-      "mapped_repo_sources": ["normative/time-and-ordering.md#EAP-TIME-1", "mappings/atal-eap-control-map.md"],
-      "related_risks": ["Ordering ambiguity", "Causal reconstruction failure", "Audit gap"],
-      "compensating_controls": ["EAP-CTRL-005"],
+      "mapped_atal_references": [
+        "Reconstructability",
+        "Timestamps"
+      ],
+      "mapped_repo_sources": [
+        "normative/time-and-ordering.md#EAP-TIME-1",
+        "mappings/atal-eap-control-map.md"
+      ],
+      "related_risks": [
+        "Ordering ambiguity",
+        "Causal reconstruction failure",
+        "Audit gap"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-005"
+      ],
       "automation_candidate": true
     },
     {
@@ -100,19 +174,33 @@
       "family": "Governance",
       "statement": "Deployments MUST declare an ordering model (centralized or hybrid). Reconciliation rules MUST be documented and auditable, covering tie-break rules, clock tolerance, and partition behavior.",
       "rationale": "Without a declared ordering model, distributed evidence trails cannot be authoritatively reconstructed, undermining causality claims in audit findings.",
-      "assurance_levels": ["EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["documentation_review", "reconstruction_drill"],
+      "test_methods": [
+        "documentation_review",
+        "reconstruction_drill"
+      ],
       "evidence_requirements": [
         "Ordering model declaration document",
         "Reconciliation rules documented",
         "Evidence of reconstruction drill using declared model"
       ],
-      "mapped_atal_references": ["Decision trail reconstruction"],
-      "mapped_repo_sources": ["normative/time-and-ordering.md#EAP-TIME-2", "examples/ordering-models/"],
-      "related_risks": ["Distributed ordering failure", "Partition-induced audit gaps"],
+      "mapped_atal_references": [
+        "Decision trail reconstruction"
+      ],
+      "mapped_repo_sources": [
+        "normative/time-and-ordering.md#EAP-TIME-2",
+        "examples/ordering-models/"
+      ],
+      "related_risks": [
+        "Distributed ordering failure",
+        "Partition-induced audit gaps"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -122,20 +210,35 @@
       "family": "Security",
       "statement": "Duplicate record_id or replayed evidence objects MUST be detectable. The system MUST define how replays are flagged and how investigations proceed.",
       "rationale": "Without replay detection, an adversary can re-submit captured evidence objects to corrupt causal chain analysis or hide activity.",
-      "assurance_levels": ["EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "technical",
       "criticality": "high",
-      "test_methods": ["replay_simulation_test", "documentation_review"],
+      "test_methods": [
+        "replay_simulation_test",
+        "documentation_review"
+      ],
       "evidence_requirements": [
         "Replay detection mechanism documentation",
         "Test result showing replay flagged in controlled test",
         "Investigation runbook for replay events"
       ],
-      "mapped_atal_references": ["Reconstructability"],
-      "mapped_repo_sources": ["normative/time-and-ordering.md#EAP-TIME-3"],
-      "related_risks": ["Evidence replay attack", "Audit corruption"],
-      "compensating_controls": ["EAP-CTRL-001"],
+      "mapped_atal_references": [
+        "Reconstructability"
+      ],
+      "mapped_repo_sources": [
+        "normative/time-and-ordering.md#EAP-TIME-3"
+      ],
+      "related_risks": [
+        "Evidence replay attack",
+        "Audit corruption"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-001"
+      ],
       "automation_candidate": true
     },
     {
@@ -144,20 +247,40 @@
       "family": "Enforcement",
       "statement": "Tool, API, memory, and routing endpoints MUST be reachable only through the ATAL enforcement layer. Any direct access path MUST be blocked using network and identity controls, not only application logic.",
       "rationale": "Application-only controls are bypassable by privileged users, compromised hosts, or misconfigured network paths. Non-bypassability requires infrastructure-level enforcement.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "technical",
       "criticality": "critical",
-      "test_methods": ["bypass_attempt_test", "network_policy_inspection", "identity_policy_inspection"],
+      "test_methods": [
+        "bypass_attempt_test",
+        "network_policy_inspection",
+        "identity_policy_inspection"
+      ],
       "evidence_requirements": [
         "Network policy configuration showing only enforcement-layer paths are permitted",
         "Identity policy configuration documentation",
         "Bypass test results (all attempts blocked)"
       ],
-      "mapped_atal_references": ["Non-bypassability", "Gateways"],
-      "mapped_repo_sources": ["normative/non-bypassability.md#EAP-NB-1", "test-harness/bypass-tests.md"],
-      "related_risks": ["Direct endpoint bypass", "Gateway circumvention", "Policy evasion"],
-      "compensating_controls": ["EAP-CTRL-008"],
+      "mapped_atal_references": [
+        "Non-bypassability",
+        "Gateways"
+      ],
+      "mapped_repo_sources": [
+        "normative/non-bypassability.md#EAP-NB-1",
+        "test-harness/bypass-tests.md"
+      ],
+      "related_risks": [
+        "Direct endpoint bypass",
+        "Gateway circumvention",
+        "Policy evasion"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-008"
+      ],
       "automation_candidate": true
     },
     {
@@ -166,19 +289,35 @@
       "family": "Enforcement",
       "statement": "Changes to gateway policies, tool registries, envelope evaluators, routing rules, and safety kernel configurations MUST be versioned, peer-reviewed, and recorded as governance events.",
       "rationale": "Silent drift in enforcement layer configuration is a primary mechanism through which non-bypassability guarantees erode over time.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["change_log_audit", "version_history_review", "governance_event_inspection"],
+      "test_methods": [
+        "change_log_audit",
+        "version_history_review",
+        "governance_event_inspection"
+      ],
       "evidence_requirements": [
         "Change log for enforcement layer configurations",
         "Evidence of peer review for at least one recent change",
         "Governance event records for configuration changes"
       ],
-      "mapped_atal_references": ["Governance / certification readiness"],
-      "mapped_repo_sources": ["normative/non-bypassability.md#EAP-NB-2", "mappings/atal-eap-control-map.md"],
-      "related_risks": ["Silent policy drift", "Unauthorized gateway modification"],
+      "mapped_atal_references": [
+        "Governance / certification readiness"
+      ],
+      "mapped_repo_sources": [
+        "normative/non-bypassability.md#EAP-NB-2",
+        "mappings/atal-eap-control-map.md"
+      ],
+      "related_risks": [
+        "Silent policy drift",
+        "Unauthorized gateway modification"
+      ],
       "compensating_controls": [],
       "automation_candidate": true
     },
@@ -188,19 +327,31 @@
       "family": "Governance",
       "statement": "Deployments MUST declare attacker classes considered (external, insider, compromised host, supply chain), assumptions and out-of-scope boundaries, and mitigations required to sustain non-bypassable claims.",
       "rationale": "Non-bypassability is a claim relative to a threat model. Without an explicit declaration, the claim is unfalsifiable and cannot be assessed.",
-      "assurance_levels": ["EAP-L3"],
+      "assurance_levels": [
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["documentation_review", "threat_model_walkthrough"],
+      "test_methods": [
+        "documentation_review",
+        "threat_model_walkthrough"
+      ],
       "evidence_requirements": [
         "Threat model document covering all required attacker classes",
         "Explicit declaration of out-of-scope boundaries",
         "Mapping of mitigations to attacker classes"
       ],
-      "mapped_atal_references": ["Non-bypassability"],
-      "mapped_repo_sources": ["normative/non-bypassability.md#EAP-NB-3"],
-      "related_risks": ["Unmodeled threat vectors", "Non-bypassability claim failure"],
+      "mapped_atal_references": [
+        "Non-bypassability"
+      ],
+      "mapped_repo_sources": [
+        "normative/non-bypassability.md#EAP-NB-3"
+      ],
+      "related_risks": [
+        "Unmodeled threat vectors",
+        "Non-bypassability claim failure"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -210,20 +361,38 @@
       "family": "Security",
       "statement": "Evidence stores MUST support field-level encryption or structured redaction with integrity-preserving references for sensitive data classes.",
       "rationale": "Logging without field-level protection creates new harm surfaces by concentrating sensitive data in evidence stores that are accessed by auditors and incident responders.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "technical",
       "criticality": "high",
-      "test_methods": ["configuration_inspection", "sample_evidence_review", "redaction_verification"],
+      "test_methods": [
+        "configuration_inspection",
+        "sample_evidence_review",
+        "redaction_verification"
+      ],
       "evidence_requirements": [
         "Evidence store configuration showing field-level protection mechanism",
         "Sample evidence object with redacted or encrypted sensitive fields",
         "Integrity reference documentation for redacted fields"
       ],
-      "mapped_atal_references": ["Logging", "Privacy"],
-      "mapped_repo_sources": ["normative/privacy-and-retention.md#EAP-PRIV-1"],
-      "related_risks": ["Evidence store data breach", "Sensitive data exposure to auditors"],
-      "compensating_controls": ["EAP-CTRL-011"],
+      "mapped_atal_references": [
+        "Logging",
+        "Privacy"
+      ],
+      "mapped_repo_sources": [
+        "normative/privacy-and-retention.md#EAP-PRIV-1"
+      ],
+      "related_risks": [
+        "Evidence store data breach",
+        "Sensitive data exposure to auditors"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-011"
+      ],
       "automation_candidate": true
     },
     {
@@ -232,19 +401,36 @@
       "family": "Oversight",
       "statement": "Evidence access MUST enforce least-privilege roles, time-bounded access sessions where feasible, audited access logs, and controlled export of forensic bundles.",
       "rationale": "Unrestricted evidence access exposes sensitive system data and creates exfiltration risks. Auditor sessions must themselves be auditable.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["access_control_review", "access_log_audit", "export_control_inspection"],
+      "test_methods": [
+        "access_control_review",
+        "access_log_audit",
+        "export_control_inspection"
+      ],
       "evidence_requirements": [
         "Role definitions for evidence access",
         "Access log sample showing time-bounded sessions",
         "Export control policy documentation"
       ],
-      "mapped_atal_references": ["Audit interfaces", "Forensic bundles"],
-      "mapped_repo_sources": ["normative/privacy-and-retention.md#EAP-PRIV-2", "mappings/atal-eap-control-map.md"],
-      "related_risks": ["Evidence exfiltration", "Auditor role abuse"],
+      "mapped_atal_references": [
+        "Audit interfaces",
+        "Forensic bundles"
+      ],
+      "mapped_repo_sources": [
+        "normative/privacy-and-retention.md#EAP-PRIV-2",
+        "mappings/atal-eap-control-map.md"
+      ],
+      "related_risks": [
+        "Evidence exfiltration",
+        "Auditor role abuse"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -254,18 +440,32 @@
       "family": "Governance",
       "statement": "Retention MUST be defined as a function of risk class, data classification, and jurisdictional obligations, with documented deletion and archival procedures.",
       "rationale": "Indefinite retention is a liability. Premature deletion destroys audit evidence. Only a risk-class-driven retention policy can satisfy both obligations simultaneously.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "medium",
-      "test_methods": ["documentation_review", "retention_schedule_audit"],
+      "test_methods": [
+        "documentation_review",
+        "retention_schedule_audit"
+      ],
       "evidence_requirements": [
         "Retention policy document covering risk class, data classification, and jurisdiction",
         "Deletion and archival procedure documentation"
       ],
-      "mapped_atal_references": ["Audit readiness"],
-      "mapped_repo_sources": ["normative/privacy-and-retention.md#EAP-PRIV-3"],
-      "related_risks": ["Evidence prematurely deleted", "Excessive sensitive data retention"],
+      "mapped_atal_references": [
+        "Audit readiness"
+      ],
+      "mapped_repo_sources": [
+        "normative/privacy-and-retention.md#EAP-PRIV-3"
+      ],
+      "related_risks": [
+        "Evidence prematurely deleted",
+        "Excessive sensitive data retention"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -275,20 +475,34 @@
       "family": "Resilience",
       "statement": "Deployments MUST document breach impact, mitigation, and incident response for evidence stores.",
       "rationale": "Evidence stores are high-value targets. Without a specific incident posture, a breach of the evidence store simultaneously destroys the audit record and triggers an incident that cannot be properly investigated.",
-      "assurance_levels": ["EAP-L3"],
+      "assurance_levels": [
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["documentation_review", "tabletop_exercise"],
+      "test_methods": [
+        "documentation_review",
+        "tabletop_exercise"
+      ],
       "evidence_requirements": [
         "Evidence store incident response playbook",
         "Breach impact assessment documentation",
         "Tabletop exercise completion record"
       ],
-      "mapped_atal_references": ["Audit readiness"],
-      "mapped_repo_sources": ["normative/privacy-and-retention.md#EAP-PRIV-4"],
-      "related_risks": ["Evidence store breach", "Audit record destruction"],
-      "compensating_controls": ["EAP-CTRL-011"],
+      "mapped_atal_references": [
+        "Audit readiness"
+      ],
+      "mapped_repo_sources": [
+        "normative/privacy-and-retention.md#EAP-PRIV-4"
+      ],
+      "related_risks": [
+        "Evidence store breach",
+        "Audit record destruction"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-011"
+      ],
       "automation_candidate": false
     },
     {
@@ -297,21 +511,38 @@
       "family": "Forensics and Reconstruction",
       "statement": "A test suite MUST include attempts for direct tool/API invocation bypass, undeclared memory persistence, unauthorized delegation or routing, tool registry tampering, and evidence tampering and replay.",
       "rationale": "Declarative non-bypassability controls degrade without adversarial testing. Documented bypass attempts with failure evidence are the primary proof of control effectiveness.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "assurance",
       "criticality": "critical",
-      "test_methods": ["adversarial_bypass_test"],
+      "test_methods": [
+        "adversarial_bypass_test"
+      ],
       "evidence_requirements": [
         "Test case IDs and environments for each bypass scenario",
         "Logs showing detection or prevention for each attempt",
         "Integrity verification outputs",
         "Links to governance events if triggered"
       ],
-      "mapped_atal_references": ["Forbidden behaviors"],
-      "mapped_repo_sources": ["test-harness/bypass-tests.md", "normative/control-effectiveness.md#EAP-TEST-1"],
-      "related_risks": ["Undetected bypass", "Control degradation over time"],
-      "compensating_controls": ["EAP-CTRL-007", "EAP-CTRL-008"],
+      "mapped_atal_references": [
+        "Forbidden behaviors"
+      ],
+      "mapped_repo_sources": [
+        "test-harness/bypass-tests.md",
+        "normative/control-effectiveness.md#EAP-TEST-1"
+      ],
+      "related_risks": [
+        "Undetected bypass",
+        "Control degradation over time"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-007",
+        "EAP-CTRL-008"
+      ],
       "automation_candidate": true
     },
     {
@@ -320,21 +551,37 @@
       "family": "Forensics and Reconstruction",
       "statement": "An audit team MUST reconstruct a selected incident path using only recorded evidence at least twice per year (L2/L3). At least one drill MUST assume vendor tooling is unavailable (L3).",
       "rationale": "Evidence systems that are never exercised under reconstruction conditions routinely fail when needed. Drills surface gaps before real incidents do.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "assurance",
       "criticality": "high",
-      "test_methods": ["reconstruction_drill"],
+      "test_methods": [
+        "reconstruction_drill"
+      ],
       "evidence_requirements": [
         "Drill completion record with date and participants",
         "Incident scenario description",
         "Reconstruction outcome report",
         "Gap findings and remediation (if any)"
       ],
-      "mapped_atal_references": ["Auditability"],
-      "mapped_repo_sources": ["test-harness/reconstruction-drills.md", "normative/control-effectiveness.md#EAP-TEST-2"],
-      "related_risks": ["Evidence system failure discovered only in real incident"],
-      "compensating_controls": ["EAP-CTRL-001", "EAP-CTRL-003"],
+      "mapped_atal_references": [
+        "Auditability"
+      ],
+      "mapped_repo_sources": [
+        "test-harness/reconstruction-drills.md",
+        "normative/control-effectiveness.md#EAP-TEST-2"
+      ],
+      "related_risks": [
+        "Evidence system failure discovered only in real incident"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-001",
+        "EAP-CTRL-003"
+      ],
       "automation_candidate": false
     },
     {
@@ -343,20 +590,36 @@
       "family": "Resilience",
       "statement": "Kill-switch procedures MUST be tested periodically. L3 deployments MUST enforce dual-control for all kill-switch actions and include at least one live-fire exercise in controlled conditions.",
       "rationale": "Kill-switch mechanisms that are never tested may fail operationally. Dual-control prevents unauthorized unilateral kill-switch invocation, which is a high-impact action.",
-      "assurance_levels": ["EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "assurance",
       "criticality": "critical",
-      "test_methods": ["tabletop_exercise", "controlled_live_fire_exercise"],
+      "test_methods": [
+        "tabletop_exercise",
+        "controlled_live_fire_exercise"
+      ],
       "evidence_requirements": [
         "Tabletop exercise record (playbook walkthrough and decision logging)",
         "Controlled exercise completion record",
         "Post-exercise evidence export and integrity verification results"
       ],
-      "mapped_atal_references": ["Kill-switch"],
-      "mapped_repo_sources": ["test-harness/kill-switch-tests.md", "normative/control-effectiveness.md#EAP-TEST-3"],
-      "related_risks": ["Kill-switch failure during incident", "Unauthorized kill-switch invocation"],
-      "compensating_controls": ["EAP-CTRL-018"],
+      "mapped_atal_references": [
+        "Kill-switch"
+      ],
+      "mapped_repo_sources": [
+        "test-harness/kill-switch-tests.md",
+        "normative/control-effectiveness.md#EAP-TEST-3"
+      ],
+      "related_risks": [
+        "Kill-switch failure during incident",
+        "Unauthorized kill-switch invocation"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-018"
+      ],
       "automation_candidate": false
     },
     {
@@ -365,19 +628,34 @@
       "family": "Oversight",
       "statement": "Deployments MUST define Operator-of-Record (OOR), Approver-of-Record (AOR) for higher-risk actions, Policy Owner, Evidence Custodian, and Safety Kernel Operator (where applicable).",
       "rationale": "Without defined accountability roles, high-impact actions lack clear ownership, investigation is hampered, and SoD requirements cannot be verified.",
-      "assurance_levels": ["EAP-L1", "EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L1",
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["documentation_review", "role_assignment_inspection"],
+      "test_methods": [
+        "documentation_review",
+        "role_assignment_inspection"
+      ],
       "evidence_requirements": [
         "Role definitions document",
         "Current role assignments (identity-to-role mapping)",
         "Evidence that OOR identity is captured on high-impact actions"
       ],
-      "mapped_atal_references": ["Operator/approvals concepts"],
-      "mapped_repo_sources": ["normative/roles-and-separation.md", "examples/role-models/"],
-      "related_risks": ["Accountability gap", "Unowned high-impact action"],
+      "mapped_atal_references": [
+        "Operator/approvals concepts"
+      ],
+      "mapped_repo_sources": [
+        "normative/roles-and-separation.md",
+        "examples/role-models/"
+      ],
+      "related_risks": [
+        "Accountability gap",
+        "Unowned high-impact action"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -387,19 +665,33 @@
       "family": "Oversight",
       "statement": "OOR and AOR MUST be distinct identities for higher-risk actions. Evidence Custodian MUST be distinct from Policy Owner where feasible. L3 MUST separate Policy Owner, Safety Kernel Operator, and Evidence Custodian.",
       "rationale": "Without separation of duties, approval becomes ceremonial and the same actor can both authorize and conceal high-impact system changes.",
-      "assurance_levels": ["EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "high",
-      "test_methods": ["identity_assignment_inspection", "access_control_review"],
+      "test_methods": [
+        "identity_assignment_inspection",
+        "access_control_review"
+      ],
       "evidence_requirements": [
         "Evidence that OOR and AOR are distinct identities",
         "Evidence that Evidence Custodian and Policy Owner are distinct",
         "L3: Evidence of three-way separation across Policy Owner, Safety Kernel Operator, and Evidence Custodian"
       ],
-      "mapped_atal_references": ["Operator/approvals concepts"],
-      "mapped_repo_sources": ["normative/roles-and-separation.md#EAP-ROLE-1", "mappings/atal-eap-control-map.md"],
-      "related_risks": ["Rubber-stamp approval", "Insider policy manipulation"],
+      "mapped_atal_references": [
+        "Operator/approvals concepts"
+      ],
+      "mapped_repo_sources": [
+        "normative/roles-and-separation.md#EAP-ROLE-1",
+        "mappings/atal-eap-control-map.md"
+      ],
+      "related_risks": [
+        "Rubber-stamp approval",
+        "Insider policy manipulation"
+      ],
       "compensating_controls": [],
       "automation_candidate": false
     },
@@ -409,20 +701,34 @@
       "family": "Oversight",
       "statement": "L3 deployments MUST enforce dual control for kill-switch actions, high-impact policy changes, and registry or enforcement configuration changes.",
       "rationale": "Single-actor control over the highest-impact actions creates a catastrophic failure point under insider threat or compromised credential scenarios.",
-      "assurance_levels": ["EAP-L3"],
+      "assurance_levels": [
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "technical",
       "criticality": "critical",
-      "test_methods": ["configuration_inspection", "dual_control_exercise"],
+      "test_methods": [
+        "configuration_inspection",
+        "dual_control_exercise"
+      ],
       "evidence_requirements": [
         "Dual control configuration documentation",
         "Evidence of dual-control enforcement for at least one kill-switch or high-impact change event",
         "Access log showing two distinct authorizing identities"
       ],
-      "mapped_atal_references": ["Operator/approvals concepts"],
-      "mapped_repo_sources": ["normative/roles-and-separation.md#EAP-ROLE-2"],
-      "related_risks": ["Unilateral kill-switch invocation", "Unilateral policy change"],
-      "compensating_controls": ["EAP-CTRL-018"],
+      "mapped_atal_references": [
+        "Operator/approvals concepts"
+      ],
+      "mapped_repo_sources": [
+        "normative/roles-and-separation.md#EAP-ROLE-2"
+      ],
+      "related_risks": [
+        "Unilateral kill-switch invocation",
+        "Unilateral policy change"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-018"
+      ],
       "automation_candidate": true
     },
     {
@@ -431,20 +737,36 @@
       "family": "Vendor and Integration",
       "statement": "Deployments MUST document all vendor and integration dependencies that form part of the ATAL enforcement boundary, including their assurance claims, version pinning, and update governance.",
       "rationale": "Undocumented vendor dependencies are a supply chain risk and make it impossible to assess whether the enforcement boundary is actually non-bypassable at the integration points.",
-      "assurance_levels": ["EAP-L2", "EAP-L3"],
+      "assurance_levels": [
+        "EAP-L2",
+        "EAP-L3"
+      ],
       "normative_strength": "MUST",
       "control_type": "operational",
       "criticality": "medium",
-      "test_methods": ["documentation_review", "dependency_inventory_check"],
+      "test_methods": [
+        "documentation_review",
+        "dependency_inventory_check"
+      ],
       "evidence_requirements": [
         "Vendor dependency register with assurance claims",
         "Version pinning documentation",
         "Update governance process documentation"
       ],
-      "mapped_atal_references": ["Governance / certification readiness"],
-      "mapped_repo_sources": ["UPSTREAM.md", "COMPATIBILITY.md"],
-      "related_risks": ["Supply chain compromise", "Undocumented integration bypass surface"],
-      "compensating_controls": ["EAP-CTRL-008"],
+      "mapped_atal_references": [
+        "Governance / certification readiness"
+      ],
+      "mapped_repo_sources": [
+        "UPSTREAM.md",
+        "COMPATIBILITY.md"
+      ],
+      "related_risks": [
+        "Supply chain compromise",
+        "Undocumented integration bypass surface"
+      ],
+      "compensating_controls": [
+        "EAP-CTRL-008"
+      ],
       "automation_candidate": false
     }
   ]

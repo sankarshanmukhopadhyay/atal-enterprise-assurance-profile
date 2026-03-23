@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.3.0 (2026-03-23)
+
+Release theme: **Operational Integrity and Quality Gates**
+
+### Added
+
+- `requirements.txt` — canonical dependency file for local and CI execution
+- `Makefile` — reproducible maintainer targets for `validate`, `build`, and `all`
+- `.github/workflows/validate.yml` — GitHub Actions quality gate on push and pull request
+- `scripts/validate_repo_integrity.py` — semantic repository integrity checks across catalog, overlays, dependency rules, and samples
+- `scripts/run_quality_gate.py` — single entrypoint to run validation and artifact regeneration
+- `docs/maintainer-release-checklist.md` — release hygiene and packaging checklist for maintainers
+
+### Changed
+
+- `README.md` — refreshed for the v0.3.0 quality-gate workflow and updated quickstart
+- `docs/cli-usage.md` — documented the canonical quality gate, Make targets, and semantic integrity validator
+- `catalogs/atal-eap-control-catalog.json` — version updated to `0.3.0`
+- `catalogs/atal-eap-control-catalog.yaml` — regenerated from the canonical JSON catalog at `0.3.0`
+- `catalogs/assurance-level-overlays/*.json` — version updated to `0.3.0`
+- `artifacts/` — regenerated checklists, traceability matrix, assessment report, and CSV/XLSX exports through the new quality gate
+
+### Operational impact
+
+v0.3.0 turns the repository into a self-checking assurance toolkit. Future changes now have an explicit validation path, CI enforcement, semantic consistency checks, and a release-ready build routine.
+
+---
+
 ## 0.2.0 (2026-03-18)
 
 Release theme: **Operational Assurance Core**

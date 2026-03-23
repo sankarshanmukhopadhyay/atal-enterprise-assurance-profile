@@ -1,12 +1,40 @@
 # CLI Usage
 
-All scripts are in `scripts/`. They require Python 3.10+ and the following packages:
+All scripts are in `scripts/`. They require Python 3.10+ and the dependencies in `requirements.txt`:
 
 ```bash
-pip install jsonschema pyyaml openpyxl
+pip install -r requirements.txt
 ```
 
-No other dependencies are required for core validation and report generation.
+## Canonical quality gate
+
+Use the quality gate as the default maintainer path:
+
+```bash
+python scripts/run_quality_gate.py --mode validate
+python scripts/run_quality_gate.py --mode build
+python scripts/run_quality_gate.py --mode all
+```
+
+Equivalent Make targets:
+
+```bash
+make validate
+make build
+make all
+```
+
+- `validate` runs schema validation, semantic integrity checks, and mandatory control coverage checks
+- `build` regenerates all checked-in generated artifacts under `artifacts/`
+- `all` runs validation first and then regenerates artifacts
+
+## Validate repository integrity
+
+```bash
+python scripts/validate_repo_integrity.py
+```
+
+This performs cross-artifact checks that schema validation alone cannot catch, including catalog JSON/YAML equivalence, duplicate IDs, overlay integrity, dependency rule validity, mandatory control applicability, and sample coverage alignment.
 
 ---
 
@@ -133,39 +161,12 @@ Output is written to `artifacts/`.
 
 ---
 
-## End-to-end EAP-L1 sample run
+## End-to-end repository run
 
-The following sequence exercises the complete EAP-L1 sample path:
+The following command exercises the canonical validation and regeneration path:
 
 ```bash
-# 1. Validate the catalog
-python scripts/validate_catalog.py catalogs/atal-eap-control-catalog.json
-
-# 2. Generate the L1 checklist
-python scripts/generate_profile_checklist.py --level EAP-L1
-
-# 3. Validate the sample evidence bundle
-python scripts/validate_evidence_bundle.py evidence/samples/eap-l1-sample-evidence-bundle.json
-
-# 4. Check required controls
-python scripts/check_required_controls.py \
-  --level EAP-L1 \
-  --bundle evidence/samples/eap-l1-sample-evidence-bundle.json
-
-# 5. Validate the sample assessment result
-python scripts/validate_assessment_result.py assessments/samples/eap-l1-sample-assessment.json
-
-# 6. Compile the assessment report
-python scripts/compile_assessment_report.py \
-  --level EAP-L1 \
-  --bundle evidence/samples/eap-l1-sample-evidence-bundle.json \
-  --result assessments/samples/eap-l1-sample-assessment.json
-
-# 7. Build the traceability matrix
-python scripts/build_traceability_matrix.py
-
-# 8. Export catalog to XLSX
-python scripts/export_csv_xlsx.py --source catalog
+python scripts/run_quality_gate.py --mode all
 ```
 
-All outputs are written to `artifacts/`.
+All outputs are written to `artifacts/`. For release hygiene, run this command before packaging a release or merging substantive catalog changes.

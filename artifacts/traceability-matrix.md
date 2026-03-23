@@ -1,6 +1,6 @@
 # EAP Traceability Matrix
 
-Generated from `catalogs/atal-eap-control-catalog.json` (v0.2.0).
+Generated from `catalogs/atal-eap-control-catalog.json` (v0.3.0).
 
 | Control ID | Title | Family | Levels | Strength | ATAL References | Repo Sources |
 |---|---|---|:---:|:---:|---|---|
