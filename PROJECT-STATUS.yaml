@@ -1,0 +1,31 @@
+schema_version: "1.0"
+project:
+  name: atal-enterprise-assurance-profile
+  maturity: working-draft
+  lifecycle: active
+  operational_status: active-development
+  specification_status: working-draft
+  intended_use:
+    - enterprise-assurance-profile-development
+    - control-and-evidence-mapping
+    - implementation-readiness-analysis
+  not_asserted:
+    - production-certification
+    - regulator-approval
+    - independent-third-party-assurance
+authority:
+  normative_scope:
+    - atal-enterprise-assurance-profile
+  does_not_own:
+    - enterprise-risk-acceptance
+    - regulator-authority
+    - external-framework-governance
+  delegation: "Repository maintainers govern the profile, mappings, and project-local evidence contracts; enterprises, regulators, and external frameworks retain their own authority."
+  revocation_or_supersession: "Profile controls and mappings are superseded through explicit versioned changes with prior states retained for audit."
+evidence:
+  validation_commands:
+    - git diff --check
+  evidence_outputs: []
+  known_limitations:
+    - the working draft is not an external certification scheme
+    - organization-specific risk acceptance remains outside repository authority
