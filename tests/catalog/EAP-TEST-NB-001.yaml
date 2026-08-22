@@ -1,0 +1,25 @@
+schema_version: "1.0"
+test_id: "EAP-TEST-NB-001"
+title: "Non-bypassability of governed action path"
+control_ids:
+  - EAP-CTRL-007
+assurance_levels:
+  - EAP-L2
+  - EAP-L3
+objective: "Demonstrate that a governed tool or API action cannot be invoked through an ungoverned path that bypasses the declared ATAL/EAP enforcement boundary."
+preconditions:
+  - "The governed endpoint and authorized enforcement gateway are identified."
+  - "A benign test operation exists for the target endpoint."
+  - "Direct-path testing is authorized in the assessment environment."
+stimulus:
+  action: "attempt_direct_governed_action_bypass"
+  parameters:
+    expected_direct_path: "blocked"
+observations:
+  - "direct-path network outcome"
+  - "identity/authorization decision"
+  - "gateway audit event"
+  - "target-system side-effect state"
+pass_condition: "The direct path is rejected, no target side effect occurs, and the rejection is attributable in evidence."
+evidence_grade: E4
+destructive: false
