@@ -1,0 +1,17 @@
+schema_version: "1.0"
+eap_version: "0.4.0"
+upstream:
+  repository: "Elytra-Security/atal-standard"
+  specification_version: "0.9"
+  ref: "main"
+  commit: "bafb65d716ddf71d2a90defbd4bfb5064c6aee0e"
+  compatibility_class: "extended-compatible"
+  assessed_at: "2026-08-22"
+  normative_document: "docs/ATAL_Specification_v0.9.md"
+assurance:
+  mapping_policy: "Every EAP control MUST either resolve to one or more upstream ATAL concepts or explicitly declare an EAP extension rationale."
+  release_policy: "A release is incomplete if the upstream baseline, compatibility class, or commit pin is missing."
+  stale_when:
+    - "upstream commit changes"
+    - "upstream normative document version changes"
+    - "mapped ATAL reference is removed or materially reinterpreted"
