@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.9.1 (2026-08-22)
+
+Release theme: **L2 Worked Assurance**
+
+### Added
+
+- complete synthetic EAP-L2 controlled-autonomy worked deployment under `examples/eap-l2-worked-example/`
+- executable non-bypassability and kill-switch test results bound to L2 controls
+- `scripts/validate_l2_worked_example.py` for cross-artifact L2 validation
+- `scripts/build_l2_assurance_claim.py` for deterministic digest-bound claim generation
+
+### Changed
+
+- canonical quality gate now validates L2 mandatory-control coverage and executable test bindings
+- build path now generates an L2 assessment report and assurance claim
+- README, `PROJECT-STATUS.yaml`, and upstream EAP release version updated to v0.9.1
+
+### Operational impact
+
+v0.9.1 demonstrates a complete EAP-L2 flow from deployment declaration through evidence, executable tests, assessment, and bounded assurance claim. The worked case is synthetic reference evidence and is not an external certification.
+
+---
+
 ## 0.9.0 (2026-08-22)
 
 Release theme: **Assurance Candidate**
