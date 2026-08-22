@@ -20,6 +20,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 PYTHON = sys.executable
 
 VALIDATION_COMMANDS = [
+    [PYTHON, "scripts/check_upstream_integrity.py"],
     [PYTHON, "scripts/validate_catalog.py", "catalogs/atal-eap-control-catalog.json"],
     [PYTHON, "scripts/validate_catalog.py", "catalogs/atal-eap-control-catalog.yaml"],
     [PYTHON, "scripts/validate_repo_integrity.py"],
