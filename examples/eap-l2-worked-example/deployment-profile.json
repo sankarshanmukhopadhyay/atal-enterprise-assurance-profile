@@ -1,5 +1,4 @@
 {
-  "$schema": "../../schemas/deployment-profile.schema.json",
   "schema_version": "1.0",
   "system": {
     "system_id": "sample-purchasing-agent",
