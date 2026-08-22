@@ -1,0 +1,1 @@
+{"artifact_id":"l3-retention","synthetic":true,"control_ids":["EAP-CTRL-012"],"claims":{"risk_class_bound":true,"data_classification_bound":true,"jurisdiction_bound":true,"review_cadence_days":90}}
