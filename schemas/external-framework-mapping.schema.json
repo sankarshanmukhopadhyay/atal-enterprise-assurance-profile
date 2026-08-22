@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sankarshanmukhopadhyay/atal-enterprise-assurance-profile/schemas/external-framework-mapping.schema.json",
+  "title": "EAP External Framework Mapping",
+  "type": "object",
+  "required": ["schema_version", "policy", "frameworks", "mappings"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "policy": {
+      "type": "object",
+      "required": ["equivalence_disclaimer", "relationship_types", "confidence_levels"],
+      "properties": {
+        "equivalence_disclaimer": {"type": "string", "minLength": 1},
+        "relationship_types": {"type": "array", "contains": {"const": "no-claim"}},
+        "confidence_levels": {"type": "array", "minItems": 1}
+      }
+    },
+    "frameworks": {"type": "object", "minProperties": 1},
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["control_id", "framework", "target", "relationship", "confidence", "rationale"],
+        "properties": {
+          "control_id": {"type": "string", "pattern": "^EAP-CTRL-[0-9]{3}$"},
+          "framework": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "relationship": {"enum": ["supports", "partially-supports", "contextual", "no-claim"]},
+          "confidence": {"enum": ["low", "medium", "high"]},
+          "rationale": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
