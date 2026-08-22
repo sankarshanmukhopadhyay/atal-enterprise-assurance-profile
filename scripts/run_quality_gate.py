@@ -21,6 +21,7 @@ PYTHON = sys.executable
 
 VALIDATION_COMMANDS = [
     [PYTHON, "scripts/check_upstream_integrity.py"],
+    [PYTHON, "scripts/release_governance.py", "validate-current"],
     [PYTHON, "scripts/validate_catalog.py", "catalogs/atal-eap-control-catalog.json"],
     [PYTHON, "scripts/validate_catalog.py", "catalogs/atal-eap-control-catalog.yaml"],
     [PYTHON, "scripts/validate_repo_integrity.py"],
