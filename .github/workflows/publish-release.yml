@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       target_sha:
-        description: "Optional exact commit to tag. If omitted, resolve the latest commit touching releases/v<version>.md"
+        description: "Optional exact commit. Legacy releases are bound to releases/release-manifest.yaml; future recovery releases may supply an explicit main ancestor."
         required: false
         type: string
       force_republish:
@@ -34,9 +34,10 @@ jobs:
     outputs:
       versions: ${{ steps.discover.outputs.versions }}
     steps:
-      - name: Check out repository history
+      - name: Check out trusted release engine
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event_name == 'push' && github.sha || 'main' }}
           fetch-depth: 0
 
       - name: Discover release versions
@@ -55,7 +56,6 @@ jobs:
             printf 'versions=["%s"]\n' "$version" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-
           python scripts/release_governance.py discover \
             --before "$BEFORE" \
             --after "$AFTER" \
@@ -70,22 +70,24 @@ jobs:
       matrix:
         version: ${{ fromJSON(needs.discover.outputs.versions) }}
     steps:
-      - name: Check out repository history
+      - name: Check out trusted release engine
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event_name == 'push' && github.sha || 'main' }}
           fetch-depth: 0
+          path: engine
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install release-engine dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r engine/requirements.txt
 
-      - name: Resolve exact release commit
+      - name: Resolve exact release commit and validation mode
         id: target
         shell: bash
         env:
@@ -95,35 +97,70 @@ jobs:
           EVENT_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
+          cd engine
+
           if [[ "$EVENT_NAME" == "push" ]]; then
             target="$EVENT_SHA"
-          elif [[ -n "${INPUT_TARGET_SHA:-}" ]]; then
-            target="$(git rev-parse "$INPUT_TARGET_SHA^{commit}")"
+            mode="strict"
           else
-            target="$(git log -1 --format=%H -- "releases/v${VERSION}.md")"
+            if legacy_target="$(python scripts/release_governance.py legacy-target --version "$VERSION" 2>/dev/null)"; then
+              mode="legacy"
+              target="$legacy_target"
+              if [[ -n "${INPUT_TARGET_SHA:-}" ]]; then
+                supplied="$(git rev-parse "$INPUT_TARGET_SHA^{commit}")"
+                if [[ "$supplied" != "$target" ]]; then
+                  echo "ERROR: legacy v$VERSION is immutably bound to $target, not $supplied." >&2
+                  exit 1
+                fi
+              fi
+            else
+              mode="strict"
+              if [[ -n "${INPUT_TARGET_SHA:-}" ]]; then
+                target="$(git rev-parse "$INPUT_TARGET_SHA^{commit}")"
+              else
+                target="$(git log -1 --format=%H -- "releases/v${VERSION}.md")"
+              fi
+            fi
           fi
 
           test -n "$target"
           git merge-base --is-ancestor "$target" origin/main
           printf 'sha=%s\n' "$target" >> "$GITHUB_OUTPUT"
+          printf 'mode=%s\n' "$mode" >> "$GITHUB_OUTPUT"
 
-      - name: Check out exact release commit
-        run: git checkout --detach "${{ steps.target.outputs.sha }}"
+      - name: Check out exact release target
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.target.outputs.sha }}
+          fetch-depth: 0
+          path: target
 
-      - name: Validate release governance
+      - name: Validate release governance against target tree
         run: |
-          python scripts/release_governance.py validate \
+          python engine/scripts/release_governance.py \
+            --repo-root target \
+            validate \
+            --mode "${{ steps.target.outputs.mode }}" \
             --version "${{ matrix.version }}" \
             --target-sha "${{ steps.target.outputs.sha }}"
 
-      - name: Run canonical assurance quality gate
-        run: python scripts/run_quality_gate.py --mode validate
-
-      - name: Prepare release metadata
-        id: metadata
+      - name: Run target-native assurance quality gate
         shell: bash
         run: |
-          python scripts/release_governance.py metadata \
+          set -euo pipefail
+          if [[ -f target/scripts/run_quality_gate.py ]]; then
+            python target/scripts/run_quality_gate.py --mode validate
+          else
+            echo "ERROR: target commit has no canonical quality gate." >&2
+            exit 1
+          fi
+
+      - name: Prepare release metadata from target tree
+        id: metadata
+        run: |
+          python engine/scripts/release_governance.py \
+            --repo-root target \
+            metadata \
             --version "${{ matrix.version }}" \
             --github-output "$GITHUB_OUTPUT"
 
@@ -134,6 +171,7 @@ jobs:
           TARGET_SHA: ${{ steps.target.outputs.sha }}
         run: |
           set -euo pipefail
+          cd engine
           git fetch --tags --force
           if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
             existing="$(git rev-list -n 1 "$TAG")"
@@ -151,6 +189,7 @@ jobs:
           TITLE: ${{ steps.metadata.outputs.title }}
         run: |
           set -euo pipefail
+          cd engine
           if ! git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -166,19 +205,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: v${{ matrix.version }}
           TITLE: ${{ steps.metadata.outputs.title }}
-          NOTES_FILE: releases/v${{ matrix.version }}.md
+          NOTES_FILE: target/releases/v${{ matrix.version }}.md
           TARGET_SHA: ${{ steps.target.outputs.sha }}
           FORCE_REPUBLISH: ${{ inputs.force_republish }}
         run: |
           set -euo pipefail
-          if gh release view "$TAG" >/dev/null 2>&1; then
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             if [[ "${FORCE_REPUBLISH:-false}" == "true" ]]; then
-              gh release edit "$TAG" --title "$TITLE" --notes-file "$NOTES_FILE"
+              gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TITLE" --notes-file "$NOTES_FILE"
             else
               echo "GitHub Release $TAG already exists; leaving it unchanged."
             fi
           else
-            gh release create "$TAG" \
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --verify-tag \
               --target "$TARGET_SHA" \
               --title "$TITLE" \
@@ -193,8 +232,8 @@ jobs:
             echo
             echo "- Version: \`v${{ matrix.version }}\`"
             echo "- Tag target: \`${{ steps.target.outputs.sha }}\`"
-            echo "- Notes source: \`releases/v${{ matrix.version }}.md\`"
-            echo "- Governance validation: passed"
-            echo "- Canonical assurance validation: passed"
+            echo "- Validation mode: \`${{ steps.target.outputs.mode }}\`"
+            echo "- Notes source: \`releases/v${{ matrix.version }}.md\` at target commit"
+            echo "- Target-native assurance validation: passed"
             echo "- Tag mutation policy: immutable"
           } >> "$GITHUB_STEP_SUMMARY"
