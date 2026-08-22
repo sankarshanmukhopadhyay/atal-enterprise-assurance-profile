@@ -1,6 +1,7 @@
 schema_version: "1.0"
 project:
   name: atal-enterprise-assurance-profile
+  version: "0.4.0"
   maturity: working-draft
   lifecycle: active
   operational_status: active-development
@@ -9,6 +10,7 @@ project:
     - enterprise-assurance-profile-development
     - control-and-evidence-mapping
     - implementation-readiness-analysis
+    - reproducible-assurance-evidence
   not_asserted:
     - production-certification
     - regulator-approval
@@ -17,15 +19,27 @@ authority:
   normative_scope:
     - atal-enterprise-assurance-profile
   does_not_own:
+    - upstream-atal-semantics
     - enterprise-risk-acceptance
     - regulator-authority
     - external-framework-governance
-  delegation: "Repository maintainers govern the profile, mappings, and project-local evidence contracts; enterprises, regulators, and external frameworks retain their own authority."
-  revocation_or_supersession: "Profile controls and mappings are superseded through explicit versioned changes with prior states retained for audit."
+  delegation: "Repository maintainers govern the profile, mappings, tests, and project-local evidence contracts; ATAL stewards, enterprises, regulators, assessors, and external frameworks retain their own authority."
+  revocation_or_supersession: "Profile controls, mappings, baselines, and claims are superseded through explicit versioned changes with prior states retained for audit."
 evidence:
   validation_commands:
-    - git diff --check
-  evidence_outputs: []
+    - python scripts/check_upstream_integrity.py
+    - python scripts/run_quality_gate.py --mode validate
+    - python scripts/run_quality_gate.py --mode all
+    - make validate
+    - make all
+  evidence_outputs:
+    - upstream/atal-baseline.yaml
+    - artifacts/traceability-matrix.md
+    - artifacts/eap-l1-assessment-report.md
+    - artifacts/eap-l1-checklist.json
+    - artifacts/eap-l2-checklist.json
+    - artifacts/eap-l3-checklist.json
   known_limitations:
     - the working draft is not an external certification scheme
     - organization-specific risk acceptance remains outside repository authority
+    - network verification that the pinned upstream commit remains canonical is not part of the offline quality gate
