@@ -1,5 +1,5 @@
 schema_version: "1.0"
-eap_version: "0.4.0"
+eap_version: "0.9.0"
 upstream:
   repository: "Elytra-Security/atal-standard"
   specification_version: "0.9"
