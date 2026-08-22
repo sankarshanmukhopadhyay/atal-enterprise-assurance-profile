@@ -1,0 +1,1 @@
+{"artifact_id":"l3-privacy-controls","synthetic":true,"control_ids":["EAP-CTRL-010"],"claims":{"field_level_encryption":true,"redaction_by_class":true,"controlled_export":true}}
