@@ -1,0 +1,1 @@
+{"artifact_id":"l3-dependency-assurance","synthetic":true,"control_ids":["EAP-CTRL-020"],"claims":{"supplier_inventory":true,"version_pinning":true,"supply_chain_threats_reviewed":true,"revocation_process":true}}
