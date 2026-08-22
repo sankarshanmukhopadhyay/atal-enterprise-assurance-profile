@@ -1,129 +1,106 @@
 # ATAL Enterprise Assurance Profile (EAP)
 
 [![Upstream: ATAL Standard](https://img.shields.io/badge/upstream-ATAL%20Standard-2ea44f)](https://github.com/Elytra-Security/atal-standard)
-[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](./changelog/CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.9.0-blue.svg)](./changelog/CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
-[![Status](https://img.shields.io/badge/status-draft-yellow.svg)](./README.md)
+[![Status](https://img.shields.io/badge/status-assurance%20candidate-orange.svg)](./releases/v0.9.0.md)
 
 ## What this is
 
-This repository is an **Enterprise Assurance Profile (EAP)** that profiles and operationalizes the upstream [ATAL Standard](https://github.com/Elytra-Security/atal-standard) for enterprise deployments. It is designed for multi-team, multi-vendor, audit-driven environments where ATAL controls must be verifiable, portable, and repeatable.
+The **ATAL Enterprise Assurance Profile (EAP)** operationalizes the upstream ATAL Standard for enterprise deployments. It is an executable assurance layer: controls, deployment profiles, evidence contracts, conformance tests, assessments, bounded assurance claims, interoperability mappings, and repository-level invariants are represented as machine-verifiable artifacts.
 
-**What this is:**
-- A canonical machine-readable control catalog derived from ATAL
-- Three assurance levels (EAP-L1/L2/L3) with machine-readable overlays
-- JSON Schemas for all core assurance artifacts
-- Evidence and assessment templates for practical use
-- Script-based tooling for validation, checklist generation, coverage checks, reporting, and export
-- A complete EAP-L1 worked example
-
-**What this is not:**
-- Not a fork of ATAL
-- Not a runtime enforcement engine
-- Not a replacement for upstream ATAL semantics
-
----
+EAP does **not** replace ATAL, certify implementations, grant regulatory approval, or accept enterprise risk. ATAL retains authority over upstream specification semantics; EAP owns only its profile, mappings, tests, evidence contracts, and claim semantics.
 
 ## Assurance levels
 
-| Level | Name | Intended use |
-|---|---|---|
-| **EAP-L1** | Enterprise Baseline | Internal copilots, low-to-medium impact, audit-required |
-| **EAP-L2** | Controlled Autonomy | Tool-using agents, persistent memory, production workflows |
-| **EAP-L3** | High Assurance | Safety, security, financial, critical operations |
+| Level | Name | Intended use | Default evidence floor |
+|---|---|---|---|
+| **EAP-L1** | Enterprise Baseline | Internal copilots, lower-impact audit-required workflows | E1 — documentary |
+| **EAP-L2** | Controlled Autonomy | Tool-using agents, persistent memory, production workflows | E2 — configuration/static |
+| **EAP-L3** | High Assurance | Safety, rights-affecting, critical, or self-modifying systems | E3 — machine-generated execution |
 
----
+A deployment MAY select a higher level. `scripts/derive_assurance_level.py` derives a minimum level from declared autonomy, impact, and environment characteristics.
 
-## v0.3.0 — Operational Integrity and Quality Gates
+## Assurance pipeline
 
-v0.3.0 hardens this repository as a **self-checking, release-ready assurance toolkit**. New in this release:
+```text
+ATAL baseline
+    ↓
+EAP controls + assurance overlay
+    ↓
+deployment profile
+    ↓
+evidence collection + evidence-strength grading
+    ↓
+portable executable conformance tests
+    ↓
+assessment result
+    ↓
+bounded assurance claim
+    ↓
+expiry / revocation / reassessment
+```
 
-- **Repository quality gate** — canonical validation and artifact regeneration entrypoint via `scripts/run_quality_gate.py` and `make validate|build|all`
-- **Semantic integrity validation** — cross-artifact checks for catalog, overlays, dependency rules, mandatory control applicability, sample coverage, and JSON/YAML equivalence via `scripts/validate_repo_integrity.py`
-- **CI automation** — GitHub Actions workflow in `.github/workflows/validate.yml` that installs dependencies and runs the full quality gate on pushes and pull requests
-- **Dependency pinning** — `requirements.txt` for reproducible local and CI execution
-- **Maintainer guidance** — refreshed README and CLI usage, plus a release checklist for maintainers in `docs/maintainer-release-checklist.md`
-- **Regenerated artifacts** — checklists, traceability outputs, assessment report, and exports refreshed under `artifacts/` against the v0.3.0 catalog and overlays
+## Release maturity sequence
 
----
+- **v0.4.0 — Assurance Provenance:** exact ATAL baseline pin, compatibility declaration, provenance validation.
+- **v0.5.0 — Assurance Claims:** deployment profile, deterministic assurance-level derivation, lifecycle-aware claim schema.
+- **v0.6.0 — Evidence Strength:** E0–E5 evidence model, level-specific strength and freshness expectations.
+- **v0.7.0 — Executable Assurance:** portable test-case/result contracts and initial kill-switch/non-bypassability vectors.
+- **v0.8.0 — Enterprise Interoperability:** confidence-scored, non-equivalence external-framework mappings.
+- **v0.9.0 — Assurance Candidate:** cross-artifact invariants and consolidated quality-gate enforcement.
+
+Release records are under `releases/`.
 
 ## Quickstart
 
-Install dependencies:
-
 ```bash
 pip install -r requirements.txt
-```
-
-Run the full repository quality gate:
-
-```bash
+python scripts/run_quality_gate.py --mode validate
 python scripts/run_quality_gate.py --mode all
 ```
 
-Or use the Make targets:
+Useful focused checks:
 
 ```bash
-make validate
-make build
-make all
+python scripts/check_upstream_integrity.py
+python scripts/validate_test_catalog.py
+python scripts/validate_external_mappings.py
+python scripts/check_assurance_invariants.py
+python scripts/grade_evidence_bundle.py evidence/samples/eap-l1-sample-evidence-bundle.json
+python scripts/derive_assurance_level.py <deployment-profile.json>
 ```
-
-This validates the catalog in JSON and YAML form, runs semantic repository integrity checks, verifies the sample evidence bundle and assessment result, checks mandatory controls, and regenerates all checked-in outputs in `artifacts/`. See `docs/cli-usage.md` for the full command reference.
-
----
 
 ## Repository map
 
-```
-catalogs/                        Control catalog (JSON + YAML) and assurance-level overlays
-docs/                            Operational model, artifact model, catalog design, CLI usage
-evidence/
-  templates/                     Evidence bundle, control evidence item, and waiver templates
-  samples/                       EAP-L1 sample evidence bundle
-assessments/
-  templates/                     Assessment result template
-  samples/                       EAP-L1 sample assessment result
-schemas/                         JSON Schemas for all core artifacts
-scripts/                         Validation, checklist, coverage, report, traceability, export scripts
-examples/
-  eap-l1-worked-example/         Complete EAP-L1 sample path (deployment context + artifacts)
-  ordering-models/               Centralized and hybrid ordering model examples
-  role-models/                   Enterprise role model examples
-  sample-forensic-bundle/        Legacy sample forensic bundle (v0.1.0)
-profiles/enterprise/             Human-readable EAP profile and level checklists (v0.1.0)
-normative/                       Normative requirement documents by control family
-mappings/                        ATAL to EAP traceability and control mapping (MD + CSV)
-test-harness/                    Required test activity descriptions (bypass, reconstruction, kill-switch)
-artifacts/                       Generated outputs (checklists, reports, traceability matrix, exports)
-changelog/                       Version history
+```text
+upstream/                        Exact ATAL normative baseline and provenance declaration
+catalogs/                        Canonical controls and EAP-L1/L2/L3 overlays
+schemas/                         Machine-readable artifact contracts
+assurance/                       Cross-artifact assurance invariants
+evidence/                        Evidence templates, samples, and E0–E5 strength model
+assessments/                     Assessment templates and samples
+tests/catalog/                   Portable executable conformance vectors
+mappings/                        ATAL traceability and external-framework mappings
+scripts/                         Validators, derivation, grading, reporting, and build tooling
+docs/                            Operational, artifact, catalog, claim, CLI, and maintainer guidance
+artifacts/                       Generated checklists, reports, traceability, and exports
+releases/                        Release records and assurance impact summaries
 ```
 
----
+## Authority model
 
-## How to run an assessment
+EAP distinguishes **Profile Authority**, **System Authority**, **Assessment Authority**, and **Risk Acceptance Authority**. These roles may exist in one organization, but remain logically separate in evidence and claims.
 
-1. **Select a level** — Pick EAP-L1, EAP-L2, or EAP-L3 based on your deployment context.
-2. **Generate a checklist** — `python scripts/generate_profile_checklist.py --level <LEVEL>`
-3. **Collect evidence** — Use templates in `evidence/templates/` to build your evidence bundle.
-4. **Validate evidence** — `python scripts/validate_evidence_bundle.py <bundle>`
-5. **Assess controls** — Populate an assessment result using `assessments/templates/assessment-result.template.json`.
-6. **Compile report** — `python scripts/compile_assessment_report.py --level <LEVEL> --bundle <bundle> --result <result>`
-7. **Record waivers** — For any `fail` or `waived` controls, create waiver records using `evidence/templates/waiver.template.json`.
+Evidence is not assessment. Assessment is not risk acceptance. Risk acceptance is not EAP conformance. EAP conformance is not regulatory approval.
 
-See `docs/operational-model.md` for the full workflow description.
+## External-framework mappings
 
----
-
-## Relationship to ATAL
-
-This EAP is a conformance layer on top of ATAL, not a fork. Every control in the catalog traces back to at least one ATAL concept via `mapped_atal_references`. Upstream version pinning is recorded in [`UPSTREAM.md`](./UPSTREAM.md).
-
----
+`mappings/external-framework-mappings.yaml` currently includes carefully bounded mappings to NIST AI RMF 1.0, ISO/IEC 42001:2023, ISO/IEC 23894:2023, and Regulation (EU) 2024/1689. Mappings are typed and confidence-scored; they are evidence-routing aids, not claims of legal or normative equivalence.
 
 ## Status
 
-Draft. Intended for peer review and iteration against ATAL releases. v0.3.0 adds repository integrity checks, CI quality gates, and a reproducible maintainer workflow.
+**v0.9.0 assurance candidate.** The repository is ready for adversarial review, expansion of executable test vectors, worked L2/L3 deployment cases, and stabilization toward a future v1.0 profile. It remains a working assurance profile, not an external certification scheme.
 
 ## License
 
