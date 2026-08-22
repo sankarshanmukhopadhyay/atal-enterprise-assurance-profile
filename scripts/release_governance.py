@@ -18,7 +18,7 @@ import sys
 import yaml
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
-SEMVER_RE = re.compile(r"^(?:v)?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([0-9A-Za-z.-]+))?$" )
+SEMVER_RE = re.compile(r"^(?:v)?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([0-9A-Za-z.-]+))?$")
 RELEASE_PATH_RE = re.compile(r"^releases/v((?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?)\.md$")
 
 
@@ -54,8 +54,7 @@ def write_output(path: str, key: str, value: str) -> None:
 def discover(before: str, after: str) -> list[str]:
     zero = "0" * 40
     if not before or before == zero:
-        parent = run("git", "rev-parse", f"{after}^")
-        before = parent
+        before = run("git", "rev-parse", f"{after}^")
 
     changed = run(
         "git",
@@ -89,6 +88,14 @@ def read_text(path: pathlib.Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def current_project_version() -> str:
+    status = yaml.safe_load(read_text(REPO_ROOT / "PROJECT-STATUS.yaml"))
+    raw = str(status.get("project", {}).get("version", ""))
+    if not raw:
+        raise ValueError("PROJECT-STATUS.yaml project.version is missing")
+    return normalize_version(raw)
+
+
 def release_title(version: str) -> str:
     text = read_text(release_path(version))
     first = next((line.strip() for line in text.splitlines() if line.strip()), "")
@@ -116,8 +123,7 @@ def validate(version: str, target_sha: str) -> None:
     if "## Release evidence" not in notes:
         raise ValueError(f"releases/v{version}.md must contain a '## Release evidence' section")
 
-    status = yaml.safe_load(read_text(REPO_ROOT / "PROJECT-STATUS.yaml"))
-    project_version = str(status.get("project", {}).get("version", "")).lstrip("v")
+    project_version = current_project_version()
     if project_version != version:
         raise ValueError(
             f"PROJECT-STATUS.yaml project.version={project_version!r}; expected {version!r}"
@@ -132,8 +138,8 @@ def validate(version: str, target_sha: str) -> None:
         raise ValueError(f"changelog does not contain a {version} release heading")
 
     upstream = yaml.safe_load(read_text(REPO_ROOT / "upstream" / "atal-baseline.yaml"))
-    eap_version = str(upstream.get("eap_version", "")).lstrip("v")
-    if eap_version and eap_version != version:
+    eap_version = normalize_version(str(upstream.get("eap_version", "")))
+    if eap_version != version:
         raise ValueError(
             f"upstream/atal-baseline.yaml eap_version={eap_version!r}; expected {version!r}"
         )
@@ -160,6 +166,8 @@ def main() -> int:
     p_validate.add_argument("--version", required=True)
     p_validate.add_argument("--target-sha", required=True)
 
+    sub.add_parser("validate-current")
+
     p_metadata = sub.add_parser("metadata")
     p_metadata.add_argument("--version", required=True)
     p_metadata.add_argument("--github-output", required=True)
@@ -174,6 +182,8 @@ def main() -> int:
             print(f"Discovered release records: {versions}")
         elif args.command == "validate":
             validate(args.version, args.target_sha)
+        elif args.command == "validate-current":
+            validate(current_project_version(), run("git", "rev-parse", "HEAD"))
         elif args.command == "metadata":
             version = normalize_version(args.version)
             write_output(args.github_output, "title", release_title(version))
