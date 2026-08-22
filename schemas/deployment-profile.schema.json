@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sankarshanmukhopadhyay/atal-enterprise-assurance-profile/schemas/deployment-profile.schema.json",
+  "title": "EAP Deployment Profile",
+  "type": "object",
+  "required": ["schema_version", "system", "autonomy", "impact", "environment", "authorities"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "system": {
+      "type": "object",
+      "required": ["system_id", "deployment_id", "name"],
+      "properties": {
+        "system_id": {"type": "string", "minLength": 1},
+        "deployment_id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "autonomy": {
+      "type": "object",
+      "required": ["tool_use", "persistent_memory", "external_side_effects", "self_modification"],
+      "properties": {
+        "tool_use": {"type": "boolean"},
+        "persistent_memory": {"type": "boolean"},
+        "external_side_effects": {"type": "boolean"},
+        "self_modification": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "impact": {
+      "type": "object",
+      "required": ["financial", "safety", "regulated_data", "rights_affecting", "critical_operations"],
+      "properties": {
+        "financial": {"type": "boolean"},
+        "safety": {"type": "boolean"},
+        "regulated_data": {"type": "boolean"},
+        "rights_affecting": {"type": "boolean"},
+        "critical_operations": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "required": ["production", "internet_exposed", "multi_tenant"],
+      "properties": {
+        "production": {"type": "boolean"},
+        "internet_exposed": {"type": "boolean"},
+        "multi_tenant": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "authorities": {
+      "type": "object",
+      "required": ["system_authority", "assessment_authority", "risk_acceptance_authority"],
+      "properties": {
+        "system_authority": {"type": "string", "minLength": 1},
+        "assessment_authority": {"type": "string", "minLength": 1},
+        "risk_acceptance_authority": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
