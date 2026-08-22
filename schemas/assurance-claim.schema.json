@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sankarshanmukhopadhyay/atal-enterprise-assurance-profile/schemas/assurance-claim.schema.json",
+  "title": "EAP Assurance Claim",
+  "type": "object",
+  "required": ["schema_version", "claim_id", "subject", "profile", "state", "control_summary", "evidence_bundle", "assessment", "validity", "authorities"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "claim_id": {"type": "string", "minLength": 1},
+    "subject": {
+      "type": "object",
+      "required": ["system_id", "deployment_id"],
+      "properties": {
+        "system_id": {"type": "string", "minLength": 1},
+        "deployment_id": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"enum": ["EAP-L1", "EAP-L2", "EAP-L3"]},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      },
+      "additionalProperties": false
+    },
+    "state": {"enum": ["CONFORMANT", "CONFORMANT-WITH-EXCEPTIONS", "PARTIALLY-CONFORMANT", "NON-CONFORMANT", "INDETERMINATE", "EXPIRED", "REVOKED"]},
+    "control_summary": {
+      "type": "object",
+      "required": ["required", "passed", "waived", "failed", "partial"],
+      "properties": {
+        "required": {"type": "integer", "minimum": 0},
+        "passed": {"type": "integer", "minimum": 0},
+        "waived": {"type": "integer", "minimum": 0},
+        "failed": {"type": "integer", "minimum": 0},
+        "partial": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "evidence_bundle": {"$ref": "#/$defs/digestReference"},
+    "assessment": {"$ref": "#/$defs/digestReference"},
+    "validity": {
+      "type": "object",
+      "required": ["assessed_at", "expires_at"],
+      "properties": {
+        "assessed_at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"},
+        "revoked_at": {"type": ["string", "null"], "format": "date-time"},
+        "revocation_reason": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "authorities": {
+      "type": "object",
+      "required": ["profile_authority", "system_authority", "assessment_authority", "risk_acceptance_authority"],
+      "properties": {
+        "profile_authority": {"type": "string", "minLength": 1},
+        "system_authority": {"type": "string", "minLength": 1},
+        "assessment_authority": {"type": "string", "minLength": 1},
+        "risk_acceptance_authority": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "digestReference": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
