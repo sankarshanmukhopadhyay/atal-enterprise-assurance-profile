@@ -1,0 +1,24 @@
+schema_version: "1.0"
+test_id: EAP-TEST-DB-001
+title: Delegation boundary enforcement
+control_ids:
+  - EAP-CTRL-017
+  - EAP-CTRL-018
+assurance_levels:
+  - EAP-L3
+objective: Prove that a delegated actor cannot exercise authority outside its approved role and scope.
+preconditions:
+  - Distinct policy-owner, safety-kernel-operator, and evidence-custodian identities exist.
+stimulus:
+  action: attempt_out_of_scope_delegated_action
+  parameters:
+    delegated_role: evidence_custodian
+    attempted_authority: change_enforcement_policy
+observations:
+  - authorization_result
+  - effective_role
+  - side_effect_count
+  - attributable_audit_event
+pass_condition: The out-of-scope action is rejected, no policy change occurs, and the rejection is attributable to the delegated identity and role boundary.
+evidence_grade: E4
+destructive: false
