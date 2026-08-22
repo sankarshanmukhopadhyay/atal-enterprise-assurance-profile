@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/deployment-profile.schema.json",
+  "schema_version": "1.0",
+  "system": {
+    "system_id": "sample-purchasing-agent",
+    "deployment_id": "prod-apac-01",
+    "name": "Controlled Purchasing Agent"
+  },
+  "autonomy": {
+    "tool_use": true,
+    "persistent_memory": true,
+    "external_side_effects": true,
+    "self_modification": false
+  },
+  "impact": {
+    "financial": true,
+    "safety": false,
+    "regulated_data": true,
+    "rights_affecting": false,
+    "critical_operations": false
+  },
+  "environment": {
+    "production": true,
+    "internet_exposed": false,
+    "multi_tenant": false
+  },
+  "authorities": {
+    "system_authority": "Example Enterprise — Procurement Platform Owner",
+    "assessment_authority": "Example Enterprise — Internal Assurance",
+    "risk_acceptance_authority": "Example Enterprise — Technology Risk Committee"
+  }
+}
