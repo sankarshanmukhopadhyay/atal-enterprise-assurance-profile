@@ -1,0 +1,65 @@
+schema_version: "1.0"
+policy:
+  equivalence_disclaimer: "Mappings express assurance relevance only. They do not assert certification, legal compliance, or normative equivalence."
+  relationship_types: [supports, partially-supports, contextual, no-claim]
+  confidence_levels: [low, medium, high]
+frameworks:
+  nist-ai-rmf-1.0:
+    title: "NIST AI Risk Management Framework 1.0"
+    status_note: "AI RMF 1.0 remains the published baseline while NIST is revising the framework."
+  iso-iec-42001-2023:
+    title: "ISO/IEC 42001:2023"
+  iso-iec-23894-2023:
+    title: "ISO/IEC 23894:2023"
+  eu-ai-act:
+    title: "Regulation (EU) 2024/1689 (Artificial Intelligence Act)"
+    status_note: "Use the current consolidated legal text for implementation decisions."
+mappings:
+  - control_id: EAP-CTRL-008
+    framework: nist-ai-rmf-1.0
+    target: "GOVERN"
+    relationship: supports
+    confidence: high
+    rationale: "Versioned, peer-reviewed enforcement changes produce governance evidence relevant to organizational AI risk governance."
+  - control_id: EAP-CTRL-009
+    framework: nist-ai-rmf-1.0
+    target: "MAP"
+    relationship: supports
+    confidence: high
+    rationale: "Explicit threat assumptions and boundaries provide deployment context required for meaningful risk mapping."
+  - control_id: EAP-CTRL-014
+    framework: nist-ai-rmf-1.0
+    target: "MEASURE"
+    relationship: supports
+    confidence: high
+    rationale: "Adversarial bypass testing produces direct control-effectiveness measurement evidence."
+  - control_id: EAP-CTRL-017
+    framework: iso-iec-42001-2023
+    target: "organizational roles and responsibilities"
+    relationship: supports
+    confidence: medium
+    rationale: "Named accountable roles support, but do not by themselves satisfy, AIMS governance requirements."
+  - control_id: EAP-CTRL-020
+    framework: iso-iec-42001-2023
+    target: "external provider and lifecycle governance"
+    relationship: partially-supports
+    confidence: medium
+    rationale: "Dependency inventories and update governance provide evidence relevant to supplier and lifecycle controls."
+  - control_id: EAP-CTRL-009
+    framework: iso-iec-23894-2023
+    target: "AI risk context and identification"
+    relationship: supports
+    confidence: medium
+    rationale: "Threat-model declarations are evidence inputs into AI risk identification and context establishment."
+  - control_id: EAP-CTRL-012
+    framework: eu-ai-act
+    target: "record-keeping and governance context"
+    relationship: contextual
+    confidence: low
+    rationale: "Retention-by-class can support record-keeping obligations where applicable, but legal applicability and retention periods must be determined independently."
+  - control_id: EAP-CTRL-015
+    framework: eu-ai-act
+    target: "post-market monitoring / incident reconstruction context"
+    relationship: contextual
+    confidence: low
+    rationale: "Reconstruction drills can produce operational evidence useful to monitoring and incident processes without implying statutory conformity."
