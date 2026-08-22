@@ -1,5 +1,112 @@
 # Changelog
 
+## 0.9.0 (2026-08-22)
+
+Release theme: **Assurance Candidate**
+
+### Added
+
+- `assurance/invariants.yaml` — cross-artifact invariants for provenance, mapping resolution, executable tests, claim lifecycle, evidence-strength progression, and quality-gate coverage
+- `scripts/check_assurance_invariants.py` — fail-closed adversarial consistency checks
+
+### Changed
+
+- `scripts/run_quality_gate.py` now includes provenance, test-catalog, external-mapping, evidence-strength, and invariant validation
+- `README.md` and `PROJECT-STATUS.yaml` now describe the repository as a pre-1.0 assurance candidate
+
+### Operational impact
+
+v0.9.0 consolidates the v0.4–v0.8 work into a candidate that can be pressure-tested as an executable assurance system. It remains explicitly non-certifying and requires broader L2/L3 implementation evidence before v1.0.
+
+---
+
+## 0.8.0 (2026-08-22)
+
+Release theme: **Enterprise Interoperability**
+
+### Added
+
+- `mappings/external-framework-mappings.yaml` — typed and confidence-scored mappings to NIST AI RMF 1.0, ISO/IEC 42001:2023, ISO/IEC 23894:2023, and Regulation (EU) 2024/1689
+- `schemas/external-framework-mapping.schema.json`
+- `scripts/validate_external_mappings.py`
+
+### Operational impact
+
+External-framework mappings are now auditable evidence-routing assertions rather than unqualified equivalence claims.
+
+---
+
+## 0.7.0 (2026-08-22)
+
+Release theme: **Executable Assurance**
+
+### Added
+
+- `schemas/test-case.schema.json`
+- `schemas/test-result.schema.json`
+- `tests/catalog/EAP-TEST-KS-001.yaml`
+- `tests/catalog/EAP-TEST-NB-001.yaml`
+- `scripts/validate_test_catalog.py`
+
+### Operational impact
+
+Selected controls now have adapter-neutral, machine-readable conformance vectors with explicit stimuli, observations, pass conditions, control bindings, and evidence-grade expectations.
+
+---
+
+## 0.6.0 (2026-08-22)
+
+Release theme: **Evidence Strength**
+
+### Added
+
+- `evidence/evidence-strength-model.yaml` — E0–E5 evidence taxonomy with level-specific minimums and freshness expectations
+- `scripts/grade_evidence_bundle.py` — evidence-strength report and optional strict enforcement
+
+### Operational impact
+
+A passing control can now be distinguished from a passing control supported by sufficiently strong evidence.
+
+---
+
+## 0.5.0 (2026-08-22)
+
+Release theme: **Assurance Claims**
+
+### Added
+
+- `schemas/deployment-profile.schema.json`
+- `schemas/assurance-claim.schema.json`
+- `scripts/derive_assurance_level.py`
+- `docs/assurance-claim-model.md`
+
+### Operational impact
+
+EAP assurance is now scoped to a declared deployment and explicit authority set. Claims support expiry and revocation, and minimum assurance level can be derived from deployment characteristics.
+
+---
+
+## 0.4.0 (2026-08-22)
+
+Release theme: **Assurance Provenance**
+
+### Added
+
+- `upstream/atal-baseline.yaml` — exact ATAL v0.9 baseline pinned to commit `bafb65d716ddf71d2a90defbd4bfb5064c6aee0e`
+- `schemas/upstream-baseline.schema.json`
+- `scripts/check_upstream_integrity.py`
+
+### Changed
+
+- `UPSTREAM.md` replaced unresolved release placeholders with a concrete compatibility declaration
+- `PROJECT-STATUS.yaml` now reports actual validation commands and evidence outputs
+
+### Operational impact
+
+A release is no longer complete while its upstream normative baseline is unresolved.
+
+---
+
 ## 0.3.0 (2026-03-23)
 
 Release theme: **Operational Integrity and Quality Gates**
