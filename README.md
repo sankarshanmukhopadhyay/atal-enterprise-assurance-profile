@@ -1,9 +1,9 @@
 # ATAL Enterprise Assurance Profile (EAP)
 
 [![Upstream: ATAL Standard](https://img.shields.io/badge/upstream-ATAL%20Standard-2ea44f)](https://github.com/Elytra-Security/atal-standard)
-[![Version](https://img.shields.io/badge/version-0.9.0-blue.svg)](./changelog/CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.9.1-blue.svg)](./changelog/CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
-[![Status](https://img.shields.io/badge/status-assurance%20candidate-orange.svg)](./releases/v0.9.0.md)
+[![Status](https://img.shields.io/badge/status-assurance%20candidate-orange.svg)](./releases/v0.9.1.md)
 
 ## What this is
 
@@ -49,8 +49,24 @@ expiry / revocation / reassessment
 - **v0.7.0 — Executable Assurance:** portable test-case/result contracts and initial kill-switch/non-bypassability vectors.
 - **v0.8.0 — Enterprise Interoperability:** confidence-scored, non-equivalence external-framework mappings.
 - **v0.9.0 — Assurance Candidate:** cross-artifact invariants and consolidated quality-gate enforcement.
+- **v0.9.1 — L2 Worked Assurance:** complete controlled-autonomy deployment, evidence, executable test results, assessment, generated report, and digest-bound assurance claim.
 
 Release records are under `releases/`.
+
+## v0.9.1 worked EAP-L2 case
+
+`examples/eap-l2-worked-example/` models a synthetic production purchasing agent with tool use, persistent memory, external side effects, financial impact, and regulated data. Those characteristics deterministically require at least **EAP-L2**.
+
+The worked case includes:
+
+- a deployment profile with separate system, assessment, and risk-acceptance authorities;
+- evidence and assessment entries for the complete 20-control catalog, including all 16 mandatory L2 controls;
+- executable results for `EAP-TEST-NB-001` and `EAP-TEST-KS-001`;
+- a canonical validator that rejects missing mandatory controls, invalid test bindings, and non-conformant decision drift;
+- a generated digest-bound assurance claim at `artifacts/eap-l2-assurance-claim.json`;
+- a generated L2 assessment report.
+
+The example is reference evidence for the methodology. It is not certification of a live enterprise deployment.
 
 ## Quickstart
 
@@ -67,8 +83,10 @@ python scripts/check_upstream_integrity.py
 python scripts/validate_test_catalog.py
 python scripts/validate_external_mappings.py
 python scripts/check_assurance_invariants.py
+python scripts/validate_l2_worked_example.py
 python scripts/grade_evidence_bundle.py evidence/samples/eap-l1-sample-evidence-bundle.json
-python scripts/derive_assurance_level.py <deployment-profile.json>
+python scripts/derive_assurance_level.py examples/eap-l2-worked-example/deployment-profile.json
+python scripts/build_l2_assurance_claim.py
 ```
 
 ## Repository map
@@ -80,11 +98,12 @@ schemas/                         Machine-readable artifact contracts
 assurance/                       Cross-artifact assurance invariants
 evidence/                        Evidence templates, samples, and E0–E5 strength model
 assessments/                     Assessment templates and samples
+examples/eap-l2-worked-example/  Complete controlled-autonomy worked assurance case
 tests/catalog/                   Portable executable conformance vectors
 mappings/                        ATAL traceability and external-framework mappings
 scripts/                         Validators, derivation, grading, reporting, and build tooling
 docs/                            Operational, artifact, catalog, claim, CLI, and maintainer guidance
-artifacts/                       Generated checklists, reports, traceability, and exports
+artifacts/                       Generated checklists, reports, claims, traceability, and exports
 releases/                        Release records and assurance impact summaries
 ```
 
@@ -100,7 +119,7 @@ Evidence is not assessment. Assessment is not risk acceptance. Risk acceptance i
 
 ## Status
 
-**v0.9.0 assurance candidate.** The repository is ready for adversarial review, expansion of executable test vectors, worked L2/L3 deployment cases, and stabilization toward a future v1.0 profile. It remains a working assurance profile, not an external certification scheme.
+**v0.9.1 assurance candidate.** The repository now includes a complete EAP-L2 reference case and is ready for the next hardening step: EAP-L3 adversarial assurance and expanded negative conformance vectors. It remains a working assurance profile, not an external certification scheme.
 
 ## License
 
