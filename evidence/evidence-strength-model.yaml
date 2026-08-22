@@ -1,0 +1,50 @@
+schema_version: "1.0"
+grades:
+  E0:
+    rank: 0
+    name: assertion-only
+    description: "Unsupported assertion or self-declaration."
+    artifact_types: []
+  E1:
+    rank: 1
+    name: documentary
+    description: "Policy, procedure, design, or other documentary evidence."
+    artifact_types: [document]
+  E2:
+    rank: 2
+    name: configuration-static
+    description: "Configuration, static analysis, inventory, or policy-as-code evidence."
+    artifact_types: [configuration, inventory, static_analysis]
+  E3:
+    rank: 3
+    name: machine-generated-execution
+    description: "Logs, runtime events, automated test results, or execution traces."
+    artifact_types: [log, runtime_event, test_result, trace]
+  E4:
+    rank: 4
+    name: independently-reproducible
+    description: "Evidence produced by a reproducible test independently executable from the assessed implementation."
+    artifact_types: [independent_test_result]
+  E5:
+    rank: 5
+    name: externally-attested
+    description: "Evidence independently attested or cryptographically vouched for by an external assurance authority."
+    artifact_types: [external_attestation]
+minimums:
+  EAP-L1:
+    default_minimum_grade: E1
+    critical_control_minimum_grade: E2
+    maximum_age_days: 180
+  EAP-L2:
+    default_minimum_grade: E2
+    critical_control_minimum_grade: E3
+    maximum_age_days: 90
+  EAP-L3:
+    default_minimum_grade: E3
+    critical_control_minimum_grade: E4
+    maximum_age_days: 30
+rules:
+  - "Evidence grade measures strength, not truth; assessment remains a separate authority action."
+  - "A higher grade MAY satisfy a lower-grade requirement when the evidence is relevant to the same control assertion."
+  - "Expired evidence MUST NOT be used to support a current claim without explicit reassessment."
+  - "Waivers do not increase evidence strength and MUST be evaluated independently."
