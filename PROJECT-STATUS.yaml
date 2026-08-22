@@ -1,7 +1,7 @@
 schema_version: "1.0"
 project:
   name: atal-enterprise-assurance-profile
-  version: "0.9.0"
+  version: "0.9.1"
   maturity: assurance-candidate
   lifecycle: active
   operational_status: active-development
@@ -35,6 +35,7 @@ evidence:
     - python scripts/validate_test_catalog.py
     - python scripts/validate_external_mappings.py
     - python scripts/check_assurance_invariants.py
+    - python scripts/validate_l2_worked_example.py
     - python scripts/run_quality_gate.py --mode validate
     - python scripts/run_quality_gate.py --mode all
     - make validate
@@ -46,14 +47,22 @@ evidence:
     - mappings/external-framework-mappings.yaml
     - tests/catalog/EAP-TEST-KS-001.yaml
     - tests/catalog/EAP-TEST-NB-001.yaml
+    - examples/eap-l2-worked-example/deployment-profile.json
+    - examples/eap-l2-worked-example/evidence-bundle.json
+    - examples/eap-l2-worked-example/assessment-result.json
+    - examples/eap-l2-worked-example/test-results/EAP-TEST-NB-001.json
+    - examples/eap-l2-worked-example/test-results/EAP-TEST-KS-001.json
+    - artifacts/eap-l2-assurance-claim.json
+    - artifacts/eap-l2-assessment-report.md
     - artifacts/traceability-matrix.md
     - artifacts/eap-l1-assessment-report.md
     - artifacts/eap-l1-checklist.json
     - artifacts/eap-l2-checklist.json
     - artifacts/eap-l3-checklist.json
   known_limitations:
-    - v0.9.0 is an assurance candidate, not an external certification scheme
+    - v0.9.1 is an assurance candidate, not an external certification scheme
+    - the EAP-L2 worked deployment is synthetic reference evidence, not a claim about a live enterprise deployment
     - organization-specific risk acceptance remains outside repository authority
     - external-framework mappings do not establish legal or normative equivalence
-    - broader EAP-L2 and EAP-L3 worked deployment evidence is still required before v1.0
+    - broader EAP-L3 worked deployment evidence is still required before v1.0
     - network verification that the pinned upstream commit remains canonical is not part of the offline quality gate
