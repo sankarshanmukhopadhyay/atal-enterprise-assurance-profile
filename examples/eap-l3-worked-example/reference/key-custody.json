@@ -1,0 +1,1 @@
+{"artifact_id":"l3-key-custody","synthetic":true,"control_ids":["EAP-CTRL-002"],"claims":{"custody":"HSM-backed","rotation_days":30,"compromise_playbook":true,"reanchoring_procedure":true}}
