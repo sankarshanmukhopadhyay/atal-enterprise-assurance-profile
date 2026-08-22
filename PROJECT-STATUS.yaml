@@ -1,20 +1,24 @@
 schema_version: "1.0"
 project:
   name: atal-enterprise-assurance-profile
-  version: "0.4.0"
-  maturity: working-draft
+  version: "0.9.0"
+  maturity: assurance-candidate
   lifecycle: active
   operational_status: active-development
-  specification_status: working-draft
+  specification_status: pre-1.0-candidate
   intended_use:
     - enterprise-assurance-profile-development
     - control-and-evidence-mapping
     - implementation-readiness-analysis
     - reproducible-assurance-evidence
+    - deployment-scoped-assurance-claims
+    - executable-conformance-testing
+    - cross-framework-evidence-routing
   not_asserted:
     - production-certification
     - regulator-approval
     - independent-third-party-assurance
+    - legal-compliance-equivalence
 authority:
   normative_scope:
     - atal-enterprise-assurance-profile
@@ -23,23 +27,33 @@ authority:
     - enterprise-risk-acceptance
     - regulator-authority
     - external-framework-governance
-  delegation: "Repository maintainers govern the profile, mappings, tests, and project-local evidence contracts; ATAL stewards, enterprises, regulators, assessors, and external frameworks retain their own authority."
-  revocation_or_supersession: "Profile controls, mappings, baselines, and claims are superseded through explicit versioned changes with prior states retained for audit."
+  delegation: "Repository maintainers govern the profile, mappings, tests, evidence contracts, and EAP claim semantics; ATAL stewards, system owners, assessors, risk authorities, regulators, and external frameworks retain their own authority."
+  revocation_or_supersession: "Profile controls, mappings, baselines, tests, and claims are superseded through explicit versioned changes with prior states retained for audit. Assurance claims additionally support expiry and explicit revocation."
 evidence:
   validation_commands:
     - python scripts/check_upstream_integrity.py
+    - python scripts/validate_test_catalog.py
+    - python scripts/validate_external_mappings.py
+    - python scripts/check_assurance_invariants.py
     - python scripts/run_quality_gate.py --mode validate
     - python scripts/run_quality_gate.py --mode all
     - make validate
     - make all
   evidence_outputs:
     - upstream/atal-baseline.yaml
+    - assurance/invariants.yaml
+    - evidence/evidence-strength-model.yaml
+    - mappings/external-framework-mappings.yaml
+    - tests/catalog/EAP-TEST-KS-001.yaml
+    - tests/catalog/EAP-TEST-NB-001.yaml
     - artifacts/traceability-matrix.md
     - artifacts/eap-l1-assessment-report.md
     - artifacts/eap-l1-checklist.json
     - artifacts/eap-l2-checklist.json
     - artifacts/eap-l3-checklist.json
   known_limitations:
-    - the working draft is not an external certification scheme
+    - v0.9.0 is an assurance candidate, not an external certification scheme
     - organization-specific risk acceptance remains outside repository authority
+    - external-framework mappings do not establish legal or normative equivalence
+    - broader EAP-L2 and EAP-L3 worked deployment evidence is still required before v1.0
     - network verification that the pinned upstream commit remains canonical is not part of the offline quality gate
