@@ -1,0 +1,200 @@
+name: publish-release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "releases/v*.md"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version without leading v (for example 0.9.0)"
+        required: true
+        type: string
+      target_sha:
+        description: "Optional exact commit to tag. If omitted, resolve the latest commit touching releases/v<version>.md"
+        required: false
+        type: string
+      force_republish:
+        description: "Update an existing GitHub Release body/title if the tag already exists. Never moves an existing tag."
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.discover.outputs.versions }}
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Discover release versions
+        id: discover
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            python scripts/release_governance.py normalize-version "$INPUT_VERSION" > /tmp/version
+            version="$(cat /tmp/version)"
+            printf 'versions=["%s"]\n' "$version" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          python scripts/release_governance.py discover \
+            --before "$BEFORE" \
+            --after "$AFTER" \
+            --github-output "$GITHUB_OUTPUT"
+
+  publish:
+    needs: discover
+    if: ${{ needs.discover.outputs.versions != '[]' && needs.discover.outputs.versions != '' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{ fromJSON(needs.discover.outputs.versions) }}
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Resolve exact release commit
+        id: target
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          VERSION: ${{ matrix.version }}
+          INPUT_TARGET_SHA: ${{ inputs.target_sha }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            target="$EVENT_SHA"
+          elif [[ -n "${INPUT_TARGET_SHA:-}" ]]; then
+            target="$(git rev-parse "$INPUT_TARGET_SHA^{commit}")"
+          else
+            target="$(git log -1 --format=%H -- "releases/v${VERSION}.md")"
+          fi
+
+          test -n "$target"
+          git merge-base --is-ancestor "$target" origin/main
+          printf 'sha=%s\n' "$target" >> "$GITHUB_OUTPUT"
+
+      - name: Check out exact release commit
+        run: git checkout --detach "${{ steps.target.outputs.sha }}"
+
+      - name: Validate release governance
+        run: |
+          python scripts/release_governance.py validate \
+            --version "${{ matrix.version }}" \
+            --target-sha "${{ steps.target.outputs.sha }}"
+
+      - name: Run canonical assurance quality gate
+        run: python scripts/run_quality_gate.py --mode validate
+
+      - name: Prepare release metadata
+        id: metadata
+        shell: bash
+        run: |
+          python scripts/release_governance.py metadata \
+            --version "${{ matrix.version }}" \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Refuse to move an existing tag
+        shell: bash
+        env:
+          TAG: v${{ matrix.version }}
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --tags --force
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            existing="$(git rev-list -n 1 "$TAG")"
+            if [[ "$existing" != "$TARGET_SHA" ]]; then
+              echo "ERROR: $TAG already points to $existing; refusing to move it to $TARGET_SHA." >&2
+              exit 1
+            fi
+          fi
+
+      - name: Create and push annotated tag
+        shell: bash
+        env:
+          TAG: v${{ matrix.version }}
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+          TITLE: ${{ steps.metadata.outputs.title }}
+        run: |
+          set -euo pipefail
+          if ! git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "$TAG" "$TARGET_SHA" -m "$TITLE"
+            git push origin "refs/tags/$TAG"
+          else
+            echo "$TAG already exists at the validated target; leaving tag immutable."
+          fi
+
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: v${{ matrix.version }}
+          TITLE: ${{ steps.metadata.outputs.title }}
+          NOTES_FILE: releases/v${{ matrix.version }}.md
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+          FORCE_REPUBLISH: ${{ inputs.force_republish }}
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            if [[ "${FORCE_REPUBLISH:-false}" == "true" ]]; then
+              gh release edit "$TAG" --title "$TITLE" --notes-file "$NOTES_FILE"
+            else
+              echo "GitHub Release $TAG already exists; leaving it unchanged."
+            fi
+          else
+            gh release create "$TAG" \
+              --verify-tag \
+              --target "$TARGET_SHA" \
+              --title "$TITLE" \
+              --notes-file "$NOTES_FILE"
+          fi
+
+      - name: Publish release evidence summary
+        shell: bash
+        run: |
+          {
+            echo "## Release publication evidence"
+            echo
+            echo "- Version: \`v${{ matrix.version }}\`"
+            echo "- Tag target: \`${{ steps.target.outputs.sha }}\`"
+            echo "- Notes source: \`releases/v${{ matrix.version }}.md\`"
+            echo "- Governance validation: passed"
+            echo "- Canonical assurance validation: passed"
+            echo "- Tag mutation policy: immutable"
+          } >> "$GITHUB_STEP_SUMMARY"
