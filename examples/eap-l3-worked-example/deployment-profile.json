@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "system": {
+    "system_id": "sample-critical-operations-agent",
+    "deployment_id": "prod-critical-01",
+    "name": "Critical Operations Coordination Agent"
+  },
+  "autonomy": {
+    "tool_use": true,
+    "persistent_memory": true,
+    "external_side_effects": true,
+    "self_modification": false
+  },
+  "impact": {
+    "financial": true,
+    "safety": true,
+    "regulated_data": true,
+    "rights_affecting": false,
+    "critical_operations": true
+  },
+  "environment": {
+    "production": true,
+    "internet_exposed": false,
+    "multi_tenant": false
+  },
+  "authorities": {
+    "system_authority": "Example Critical Operator — Service Authority",
+    "assessment_authority": "Example Independent Assurance Function",
+    "risk_acceptance_authority": "Example Critical Operator — Risk Committee"
+  }
+}
