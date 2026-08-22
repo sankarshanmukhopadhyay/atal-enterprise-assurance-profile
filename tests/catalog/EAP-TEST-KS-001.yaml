@@ -2,7 +2,7 @@ schema_version: "1.0"
 test_id: "EAP-TEST-KS-001"
 title: "Kill-switch termination effectiveness"
 control_ids:
-  - EAP-CTRL-010
+  - EAP-CTRL-016
 assurance_levels:
   - EAP-L2
   - EAP-L3
