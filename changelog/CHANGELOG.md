@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.9.2 (2026-08-22)
+
+Release theme: **L3 Adversarial Assurance**
+
+### Added
+
+- complete synthetic EAP-L3 high-assurance worked deployment under `examples/eap-l3-worked-example/`
+- five new executable vectors for evidence integrity, replay rejection, independent reconstruction, dual control, and delegation boundaries
+- positive L3 executable fixtures for the expanded test catalog plus existing non-bypassability and kill-switch vectors
+- negative adversarial fixtures for undetected evidence tampering and improper single-approver execution
+- `scripts/validate_l3_worked_example.py` with mandatory-control, test-binding, negative-fixture, derived-level, and E4+ critical-evidence enforcement
+- `scripts/build_l3_assurance_claim.py` for deterministic digest-bound L3 claim generation
+
+### Changed
+
+- canonical quality gate now validates complete EAP-L3 evidence/assessment coverage and generates an L3 assessment report and assurance claim
+- README, `PROJECT-STATUS.yaml`, and upstream EAP release version updated to v0.9.2
+
+### Operational impact
+
+v0.9.2 demonstrates that the reference assurance system can both accept valid high-assurance evidence and represent deliberately unsafe outcomes as explicit failures. Designated critical L3 controls require E4+ executable evidence before a conformant reference outcome is accepted.
+
+---
+
 ## 0.9.1 (2026-08-22)
 
 Release theme: **L2 Worked Assurance**
