@@ -1,0 +1,22 @@
+schema_version: "1.0"
+test_id: EAP-TEST-EI-001
+title: Evidence chain tamper detection
+control_ids:
+  - EAP-CTRL-001
+  - EAP-CTRL-003
+assurance_levels:
+  - EAP-L3
+objective: Detect alteration of a previously sealed evidence event or manifest.
+preconditions:
+  - A valid signed evidence bundle and verification key are available.
+stimulus:
+  action: mutate_sealed_evidence
+  parameters:
+    mutation: alter_event_payload_without_resigning
+observations:
+  - verification_result
+  - invalidated_digest
+  - attributable_audit_event
+pass_condition: Verification fails closed, identifies a digest/signature mismatch, and records an attributable audit event.
+evidence_grade: E4
+destructive: false
