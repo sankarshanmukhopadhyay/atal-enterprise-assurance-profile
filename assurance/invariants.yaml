@@ -1,0 +1,27 @@
+schema_version: "1.0"
+profile_version: "0.9.0"
+invariants:
+  - id: EAP-INV-001
+    statement: "Every release baseline MUST pin a full upstream ATAL commit and compatibility class."
+    validator: upstream-baseline
+    severity: critical
+  - id: EAP-INV-002
+    statement: "Every external-framework mapping MUST reference an existing EAP control and declared framework."
+    validator: external-mappings
+    severity: high
+  - id: EAP-INV-003
+    statement: "Every executable test vector MUST reference at least one EAP control and declare a machine-generated-or-stronger evidence grade."
+    validator: test-catalog
+    severity: high
+  - id: EAP-INV-004
+    statement: "EAP assurance claims MUST support EXPIRED and REVOKED lifecycle states."
+    validator: claim-schema
+    severity: critical
+  - id: EAP-INV-005
+    statement: "Evidence-strength minimums MUST become strictly stronger from EAP-L1 through EAP-L3."
+    validator: evidence-strength
+    severity: high
+  - id: EAP-INV-006
+    statement: "The repository quality gate MUST execute upstream, test-catalog, and external-mapping validation."
+    validator: quality-gate-coverage
+    severity: critical
