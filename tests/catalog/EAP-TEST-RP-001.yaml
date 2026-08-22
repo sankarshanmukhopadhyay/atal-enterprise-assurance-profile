@@ -1,0 +1,21 @@
+schema_version: "1.0"
+test_id: EAP-TEST-RP-001
+title: Replay detection and rejection
+control_ids:
+  - EAP-CTRL-006
+assurance_levels:
+  - EAP-L3
+objective: Demonstrate that a previously accepted governed request cannot be replayed successfully.
+preconditions:
+  - A governed request with a consumed nonce or sequence identifier exists.
+stimulus:
+  action: replay_governed_request
+  parameters:
+    preserve_original_nonce: true
+observations:
+  - replay_detection
+  - side_effect_count
+  - attributable_audit_event
+pass_condition: Replay is detected and rejected, no duplicate side effect occurs, and the rejection is auditable.
+evidence_grade: E4
+destructive: false
