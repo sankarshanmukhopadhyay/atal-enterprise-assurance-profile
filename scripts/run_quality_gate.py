@@ -28,11 +28,14 @@ VALIDATION_COMMANDS = [
     [PYTHON, "scripts/validate_test_catalog.py"],
     [PYTHON, "scripts/validate_external_mappings.py"],
     [PYTHON, "scripts/check_assurance_invariants.py"],
+    [PYTHON, "scripts/validate_l2_worked_example.py"],
     [PYTHON, "scripts/validate_evidence_bundle.py", "evidence/samples/eap-l1-sample-evidence-bundle.json"],
     [PYTHON, "scripts/grade_evidence_bundle.py", "evidence/samples/eap-l1-sample-evidence-bundle.json"],
     [PYTHON, "scripts/validate_assessment_result.py", "assessments/samples/eap-l1-sample-assessment.json"],
     [PYTHON, "scripts/check_required_controls.py", "--level", "EAP-L1", "--bundle", "evidence/samples/eap-l1-sample-evidence-bundle.json"],
     [PYTHON, "scripts/check_required_controls.py", "--level", "EAP-L1", "--result", "assessments/samples/eap-l1-sample-assessment.json"],
+    [PYTHON, "scripts/check_required_controls.py", "--level", "EAP-L2", "--bundle", "examples/eap-l2-worked-example/evidence-bundle.json"],
+    [PYTHON, "scripts/check_required_controls.py", "--level", "EAP-L2", "--result", "examples/eap-l2-worked-example/assessment-result.json"],
 ]
 
 BUILD_COMMANDS = [
@@ -41,6 +44,8 @@ BUILD_COMMANDS = [
     [PYTHON, "scripts/generate_profile_checklist.py", "--level", "EAP-L3"],
     [PYTHON, "scripts/build_traceability_matrix.py"],
     [PYTHON, "scripts/compile_assessment_report.py", "--level", "EAP-L1", "--bundle", "evidence/samples/eap-l1-sample-evidence-bundle.json", "--result", "assessments/samples/eap-l1-sample-assessment.json"],
+    [PYTHON, "scripts/compile_assessment_report.py", "--level", "EAP-L2", "--bundle", "examples/eap-l2-worked-example/evidence-bundle.json", "--result", "examples/eap-l2-worked-example/assessment-result.json"],
+    [PYTHON, "scripts/build_l2_assurance_claim.py"],
     [PYTHON, "scripts/export_csv_xlsx.py", "--source", "catalog"],
     [PYTHON, "scripts/export_csv_xlsx.py", "--source", "assessment", "--result", "assessments/samples/eap-l1-sample-assessment.json"],
 ]
