@@ -1,0 +1,23 @@
+schema_version: "1.0"
+test_id: EAP-TEST-DC-001
+title: Dual-control enforcement
+control_ids:
+  - EAP-CTRL-016
+  - EAP-CTRL-019
+assurance_levels:
+  - EAP-L3
+objective: Prove that covered high-risk actions require two distinct authorizing identities.
+preconditions:
+  - A covered high-risk action is configured for dual control.
+stimulus:
+  action: attempt_single_approver_execution
+  parameters:
+    authorizer_count: 1
+observations:
+  - execution_result
+  - authorizer_identities
+  - side_effect_count
+  - attributable_audit_event
+pass_condition: Single-approver execution is rejected, no governed side effect occurs, and the rejection identifies the missing second authorization.
+evidence_grade: E4
+destructive: false

@@ -54,10 +54,33 @@ def main() -> int:
         fail(f"EAP-INV-005 evidence minimums are not strictly increasing: {sequence}", failures)
 
     gate = (ROOT / "scripts/run_quality_gate.py").read_text(encoding="utf-8")
-    required = ["check_upstream_integrity.py", "validate_test_catalog.py", "validate_external_mappings.py", "check_assurance_invariants.py"]
+    required = [
+        "check_upstream_integrity.py",
+        "validate_test_catalog.py",
+        "validate_external_mappings.py",
+        "check_assurance_invariants.py",
+        "validate_l2_worked_example.py",
+        "validate_l3_worked_example.py",
+    ]
     missing = [name for name in required if name not in gate]
     if missing:
         fail(f"EAP-INV-006 quality gate missing validators: {', '.join(missing)}", failures)
+
+    l3_case = ROOT / "examples/eap-l3-worked-example"
+    if l3_case.exists():
+        assessment = json.loads((l3_case / "assessment-result.json").read_text(encoding="utf-8"))
+        bundle = json.loads((l3_case / "evidence-bundle.json").read_text(encoding="utf-8"))
+        if assessment.get("decision", {}).get("outcome") == "conformant":
+            by_control = {item["control_id"]: item for item in bundle.get("control_evidence_items", [])}
+            critical = {
+                "EAP-CTRL-001", "EAP-CTRL-003", "EAP-CTRL-004", "EAP-CTRL-005",
+                "EAP-CTRL-006", "EAP-CTRL-007", "EAP-CTRL-014", "EAP-CTRL-015",
+                "EAP-CTRL-016", "EAP-CTRL-017", "EAP-CTRL-018", "EAP-CTRL-019",
+            }
+            for control_id in sorted(critical):
+                artifacts = by_control.get(control_id, {}).get("evidence_artifacts", [])
+                if not any(a.get("artifact_type") == "test_result" and a.get("evidence_grade") in {"E4", "E5"} for a in artifacts):
+                    fail(f"EAP-INV-007 conformant L3 assessment lacks E4+ executable evidence for {control_id}", failures)
 
     if failures:
         print(f"{len(failures)} assurance invariant(s) failed.", file=sys.stderr)

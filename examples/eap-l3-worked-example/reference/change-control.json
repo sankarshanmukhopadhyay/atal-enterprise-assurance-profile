@@ -1,0 +1,1 @@
+{"artifact_id":"l3-change-control","synthetic":true,"control_ids":["EAP-CTRL-008"],"claims":{"protected_components":["gateway","registry","evaluator","safety-kernel"],"approval_required":true,"audit_logged":true}}

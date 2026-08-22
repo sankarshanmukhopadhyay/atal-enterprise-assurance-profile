@@ -1,0 +1,1 @@
+{"artifact_id":"l3-evidence-access","synthetic":true,"control_ids":["EAP-CTRL-011"],"claims":{"time_bounded_sessions":true,"auditor_access_logs":true,"export_controls":true}}
