@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/assessment-result.schema.json",
+  "assessment_id": "assessment-eap-l2-worked-001",
+  "assurance_level": "EAP-L2",
+  "assessment_date": "2026-08-22",
+  "assessor": "Example Enterprise — Internal Assurance",
+  "target_profile_ref": "catalogs/assurance-level-overlays/EAP-L2-overlay.json",
+  "evidence_bundle_ref": "examples/eap-l2-worked-example/evidence-bundle.json",
+  "control_results": [
+    {"control_id":"EAP-CTRL-001","result":"pass"},{"control_id":"EAP-CTRL-002","result":"pass"},{"control_id":"EAP-CTRL-003","result":"pass"},{"control_id":"EAP-CTRL-004","result":"pass"},{"control_id":"EAP-CTRL-005","result":"pass"},{"control_id":"EAP-CTRL-006","result":"pass"},{"control_id":"EAP-CTRL-007","result":"pass"},{"control_id":"EAP-CTRL-008","result":"pass"},{"control_id":"EAP-CTRL-009","result":"not_applicable"},{"control_id":"EAP-CTRL-010","result":"pass"},{"control_id":"EAP-CTRL-011","result":"pass"},{"control_id":"EAP-CTRL-012","result":"pass"},{"control_id":"EAP-CTRL-013","result":"not_applicable"},{"control_id":"EAP-CTRL-014","result":"pass"},{"control_id":"EAP-CTRL-015","result":"pass"},{"control_id":"EAP-CTRL-016","result":"pass"},{"control_id":"EAP-CTRL-017","result":"pass"},{"control_id":"EAP-CTRL-018","result":"pass"},{"control_id":"EAP-CTRL-019","result":"not_applicable"},{"control_id":"EAP-CTRL-020","result":"pass"}
+  ],
+  "findings": [],
+  "residual_risks": [],
+  "decision": {
+    "outcome": "conformant",
+    "summary": "Synthetic reference case satisfies all EAP-L2 mandatory controls and the L2 replay-detection SHOULD control.",
+    "conditions": [],
+    "valid_until": "2026-11-20"
+  }
+}
