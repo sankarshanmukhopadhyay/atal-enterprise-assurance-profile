@@ -1,0 +1,23 @@
+schema_version: "1.0"
+test_id: EAP-TEST-RC-001
+title: Independent event reconstruction
+control_ids:
+  - EAP-CTRL-004
+  - EAP-CTRL-005
+  - EAP-CTRL-015
+assurance_levels:
+  - EAP-L3
+objective: Reconstruct a governed action sequence without relying on the primary vendor dashboard.
+preconditions:
+  - Signed evidence exports and ordering metadata are available.
+stimulus:
+  action: reconstruct_without_primary_dashboard
+  parameters:
+    vendor_dashboard_available: false
+observations:
+  - reconstructed_sequence
+  - sequence_gaps
+  - verifier_result
+pass_condition: An independent verifier reconstructs the complete ordered sequence with no unexplained gaps.
+evidence_grade: E4
+destructive: false
