@@ -1,6 +1,6 @@
 schema_version: "1.0"
-profile_version: "0.9.4"
-stability: candidate-stable
+profile_version: "0.9.5"
+stability: frozen-for-v1-decision
 schemas:
   - schemas/control-catalog.schema.json
   - schemas/assurance-profile.schema.json
@@ -30,4 +30,5 @@ test_result_states:
 compatibility_policy:
   - stable identifiers MUST NOT change meaning or syntax incompatibly before v1.0 without an explicit breaking-change disposition
   - declared claim and test-result states MUST NOT be removed or renamed
-  - candidate-stable schemas MUST remain parseable and retain required core fields through the remainder of the 0.9.x line
+  - frozen schemas MUST remain parseable and retain required core fields until the explicit v1.0 decision
+  - any v1.0 incompatible change MUST be explicitly dispositioned by the v1 decision issue and release PR
