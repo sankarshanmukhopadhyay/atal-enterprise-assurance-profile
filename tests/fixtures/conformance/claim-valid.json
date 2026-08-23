@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "claim_id": "fixture:claim:valid",
+  "subject": {"system_id": "fixture-system", "deployment_id": "fixture-deployment"},
+  "profile": {"id": "EAP-L2", "version": "0.9.4"},
+  "state": "CONFORMANT",
+  "control_summary": {"required": 1, "passed": 1, "waived": 0, "failed": 0, "partial": 0},
+  "evidence_bundle": {"path": "fixture/evidence.json", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+  "assessment": {"path": "fixture/assessment.json", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+  "validity": {"assessed_at": "2026-08-23T00:00:00Z", "expires_at": "2026-12-31T23:59:59Z", "revoked_at": null, "revocation_reason": null},
+  "authorities": {"profile_authority": "fixture-profile", "system_authority": "fixture-system", "assessment_authority": "fixture-assessor", "risk_acceptance_authority": "fixture-risk"}
+}
