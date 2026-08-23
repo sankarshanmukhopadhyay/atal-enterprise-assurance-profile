@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.9.4 (2026-08-23)
+
+Release theme: **v1.0 Readiness Evidence**
+
+### Added
+
+- `assurance/stable-contracts.yaml` candidate-stable schema, identifier, claim-state, and test-result declarations
+- `scripts/check_contract_compatibility.py` compatibility enforcement
+- positive and negative conformance fixtures for claims, test results, and assessor handoffs
+- `scripts/validate_conformance_corpus.py` expected accept/reject validation
+- `assurance/v1-readiness-criteria.yaml` blocking readiness criteria
+- deterministic JSON and Markdown v1.0 readiness reports
+- readiness evidence documentation
+
+### Changed
+
+- assessor handoffs now derive the active repository version and release record dynamically
+- canonical quality gate validates compatibility and conformance behavior and builds the readiness report
+- README, `PROJECT-STATUS.yaml`, and upstream EAP release version updated to v0.9.4
+
+### Operational impact
+
+v0.9.4 turns v1.0 readiness into a fail-closed machine-verifiable property. It intentionally reports `not_ready` while the final governance/compatibility freeze remains outstanding for v0.9.5.
+
+---
+
 ## 0.9.3 (2026-08-23)
 
 Release theme: **Reproducible Assessment**
@@ -260,7 +286,7 @@ Release theme: **Operational Assurance Core**
 
 ### Changed
 
-- `README.md` — rewritten to reflect the v0.2.0 operational assurance pack positioning; added quickstart commands, repository map, and assessment workflow summary
+- `README.md` — rewritten to reflect the v0.2.0 operational assurance pack positioning; added quickstart commands, repository map, assessment workflow summary
 - `UPSTREAM.md` — version pinning table preserved; no upstream version change in this release
 
 ### Preserved
