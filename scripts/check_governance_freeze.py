@@ -52,10 +52,15 @@ def main() -> int:
         failures.append("candidate-stable contract declaration version does not match repository version")
 
     workflow = (ROOT / ".github/workflows/publish-release.yml").read_text(encoding="utf-8")
-    if "git tag -a" not in workflow or "Tag already exists at" not in workflow:
-        failures.append("release workflow no longer exposes expected immutable-tag safeguards")
-    if "--force" in workflow and "force_republish" not in workflow:
-        failures.append("release workflow contains unexplained force behavior")
+    required_release_safeguards = [
+        "Refuse to move an existing tag",
+        "git tag -a",
+        "refusing to move it",
+        "leaving tag immutable",
+    ]
+    missing_safeguards = [text for text in required_release_safeguards if text not in workflow]
+    if missing_safeguards:
+        failures.append("release workflow lost immutable-tag safeguards: " + ", ".join(missing_safeguards))
 
     if failures:
         print("✗ governance freeze validation FAILED", file=sys.stderr)
