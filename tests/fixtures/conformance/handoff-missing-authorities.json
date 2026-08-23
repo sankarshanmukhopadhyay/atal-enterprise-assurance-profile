@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "handoff_id": "fixture:handoff:missing-authorities",
+  "profile": {"id": "EAP-L3", "version": "0.9.4"},
+  "subject": {"system_id": "fixture-system", "deployment_id": "fixture-deployment"},
+  "lifecycle": {"assessed_at": "2026-08-23T00:00:00Z", "expires_at": "2026-12-31T23:59:59Z", "state": "CONFORMANT", "revoked_at": null, "revocation_reason": null},
+  "sources": [
+    {"role": "deployment-profile", "path": "fixture/deployment.json", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    {"role": "evidence-bundle", "path": "fixture/evidence.json", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+    {"role": "assessment", "path": "fixture/assessment.json", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+    {"role": "upstream-baseline", "path": "fixture/upstream.yaml", "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"},
+    {"role": "release-record", "path": "fixture/release.md", "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"},
+    {"role": "assurance-claim", "path": "fixture/claim.json", "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}
+  ]
+}
