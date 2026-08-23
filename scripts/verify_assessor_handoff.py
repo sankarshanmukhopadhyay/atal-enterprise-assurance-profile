@@ -53,6 +53,8 @@ def verify(manifest: dict, now: datetime | None = None) -> tuple[bool, list[dict
         findings.append({"code": "claim-cardinality", "message": "exactly one assurance claim is required"})
     else:
         claim = load(ROOT / claim_sources[0]["path"])
+        if claim.get("profile") != manifest.get("profile"):
+            findings.append({"code": "profile-version-mismatch"})
         if claim.get("subject") != manifest.get("subject"):
             findings.append({"code": "subject-mismatch"})
         if claim.get("authorities") != manifest.get("authorities"):
