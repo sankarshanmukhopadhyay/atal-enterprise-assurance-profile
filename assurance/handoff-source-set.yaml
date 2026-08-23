@@ -1,0 +1,33 @@
+schema_version: "1.0"
+profile: EAP-L3
+version: "0.9.3"
+subject:
+  system_id: sample-critical-operations-agent
+  deployment_id: prod-critical-01
+sources:
+  - role: deployment-profile
+    path: examples/eap-l3-worked-example/deployment-profile.json
+  - role: evidence-bundle
+    path: examples/eap-l3-worked-example/evidence-bundle.json
+  - role: assessment
+    path: examples/eap-l3-worked-example/assessment-result.json
+  - role: upstream-baseline
+    path: upstream/atal-baseline.yaml
+  - role: release-record
+    path: releases/v0.9.3.md
+  - role: assurance-claim
+    path: artifacts/eap-l3-assurance-claim.json
+  - role: test-result
+    path: examples/eap-l3-worked-example/test-results/EAP-TEST-EI-001.json
+  - role: test-result
+    path: examples/eap-l3-worked-example/test-results/EAP-TEST-RP-001.json
+  - role: test-result
+    path: examples/eap-l3-worked-example/test-results/EAP-TEST-RC-001.json
+  - role: test-result
+    path: examples/eap-l3-worked-example/test-results/EAP-TEST-DC-001.json
+  - role: test-result
+    path: examples/eap-l3-worked-example/test-results/EAP-TEST-DB-001.json
+  - role: test-result
+    path: examples/eap-l3-worked-example/test-results/EAP-TEST-NB-001.json
+  - role: test-result
+    path: examples/eap-l3-worked-example/test-results/EAP-TEST-KS-001.json

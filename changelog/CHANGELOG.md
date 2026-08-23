@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.9.3 (2026-08-23)
+
+Release theme: **Reproducible Assessment**
+
+### Added
+
+- independent-assessor handoff schema and bounded source-set contract
+- deterministic digest-addressed handoff construction and verification
+- machine-readable verification and tamper-rejection reports
+- deliberate digest-tamper fixture that must fail closed
+- independent-assessor authority-boundary documentation
+
+### Changed
+
+- L3 claim generation now derives the repository version from `PROJECT-STATUS.yaml`
+- canonical quality gate now builds and verifies the assessor handoff and executes its tamper self-test
+- README, `PROJECT-STATUS.yaml`, and upstream EAP release version updated to v0.9.3
+
+### Operational impact
+
+v0.9.3 allows a bounded EAP-L3 assurance claim to be reconstructed and integrity-checked by a separate verifier without undocumented repository state. Verification preserves profile/version, authority, expiry, and revocation semantics and rejects digest drift.
+
+---
+
 ## 0.9.2 (2026-08-22)
 
 Release theme: **L3 Adversarial Assurance**

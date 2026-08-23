@@ -1,0 +1,9 @@
+{
+  "fixture_id": "handoff-tampered-digest-001",
+  "mutation": {
+    "source_role": "evidence-bundle",
+    "replacement_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "expected_result": "reject",
+  "expected_reason": "digest-mismatch"
+}

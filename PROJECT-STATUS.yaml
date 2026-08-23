@@ -1,7 +1,7 @@
 schema_version: "1.0"
 project:
   name: atal-enterprise-assurance-profile
-  version: "0.9.2"
+  version: "0.9.3"
   maturity: assurance-candidate
   lifecycle: active
   operational_status: active-development
@@ -14,6 +14,7 @@ project:
     - deployment-scoped-assurance-claims
     - executable-conformance-testing
     - adversarial-assurance-testing
+    - independent-assessor-handoff
     - cross-framework-evidence-routing
   not_asserted:
     - production-certification
@@ -28,8 +29,8 @@ authority:
     - enterprise-risk-acceptance
     - regulator-authority
     - external-framework-governance
-  delegation: "Repository maintainers govern the profile, mappings, tests, evidence contracts, and EAP claim semantics; ATAL stewards, system owners, assessors, risk authorities, regulators, and external frameworks retain their own authority."
-  revocation_or_supersession: "Profile controls, mappings, baselines, tests, and claims are superseded through explicit versioned changes with prior states retained for audit. Assurance claims additionally support expiry and explicit revocation."
+  delegation: "Repository maintainers govern the profile, mappings, tests, evidence contracts, handoff contracts, and EAP claim semantics; system owners, assessors, risk authorities, regulators, ATAL stewards, and external frameworks retain their own authority."
+  revocation_or_supersession: "Profile controls, mappings, baselines, tests, handoffs, and claims are superseded through explicit versioned changes with prior states retained for audit. Assurance claims additionally support expiry and explicit revocation."
 evidence:
   validation_commands:
     - python scripts/check_upstream_integrity.py
@@ -38,44 +39,29 @@ evidence:
     - python scripts/check_assurance_invariants.py
     - python scripts/validate_l2_worked_example.py
     - python scripts/validate_l3_worked_example.py
+    - python scripts/verify_assessor_handoff.py --tamper-self-test
     - python scripts/run_quality_gate.py --mode validate
     - python scripts/run_quality_gate.py --mode all
-    - make validate
-    - make all
   evidence_outputs:
     - upstream/atal-baseline.yaml
     - assurance/invariants.yaml
-    - evidence/evidence-strength-model.yaml
-    - mappings/external-framework-mappings.yaml
-    - tests/catalog/EAP-TEST-KS-001.yaml
-    - tests/catalog/EAP-TEST-NB-001.yaml
-    - tests/catalog/EAP-TEST-EI-001.yaml
-    - tests/catalog/EAP-TEST-RP-001.yaml
-    - tests/catalog/EAP-TEST-RC-001.yaml
-    - tests/catalog/EAP-TEST-DC-001.yaml
-    - tests/catalog/EAP-TEST-DB-001.yaml
-    - examples/eap-l2-worked-example/deployment-profile.json
-    - examples/eap-l2-worked-example/evidence-bundle.json
-    - examples/eap-l2-worked-example/assessment-result.json
-    - examples/eap-l3-worked-example/deployment-profile.json
-    - examples/eap-l3-worked-example/evidence-bundle.json
-    - examples/eap-l3-worked-example/assessment-result.json
-    - examples/eap-l3-worked-example/test-results/
-    - examples/eap-l3-worked-example/negative-fixtures/
+    - assurance/handoff-source-set.yaml
+    - schemas/assessor-handoff.schema.json
+    - tests/fixtures/handoff/tampered-digest.json
+    - examples/eap-l2-worked-example/
+    - examples/eap-l3-worked-example/
     - artifacts/eap-l2-assurance-claim.json
     - artifacts/eap-l3-assurance-claim.json
+    - artifacts/eap-l3-assessor-handoff.json
+    - artifacts/eap-l3-handoff-verification.json
+    - artifacts/eap-l3-handoff-tamper-verification.json
     - artifacts/eap-l2-assessment-report.md
     - artifacts/eap-l3-assessment-report.md
     - artifacts/traceability-matrix.md
-    - artifacts/eap-l1-assessment-report.md
-    - artifacts/eap-l1-checklist.json
-    - artifacts/eap-l2-checklist.json
-    - artifacts/eap-l3-checklist.json
   known_limitations:
-    - v0.9.2 is an assurance candidate, not an external certification scheme
-    - the EAP-L2 and EAP-L3 worked deployments are synthetic reference evidence, not claims about live enterprise deployments
-    - negative fixtures prove validator behavior but are not substitutes for independent red-team execution against a live implementation
+    - v0.9.3 is an assurance candidate, not an external certification scheme
+    - worked deployments and assessor handoffs are synthetic reference evidence, not claims about live enterprise deployments
+    - independent verification proves bounded integrity/reproducibility, not truth of underlying evidence
     - organization-specific risk acceptance remains outside repository authority
     - external-framework mappings do not establish legal or normative equivalence
-    - independent claim reconstruction by a separate assessor remains work for v0.9.3
     - network verification that the pinned upstream commit remains canonical is not part of the offline quality gate
