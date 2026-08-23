@@ -10,6 +10,7 @@ project:
     - enterprise-assurance-profile-development
     - control-and-evidence-mapping
     - implementation-readiness-analysis
+    - operator-guided-first-use
     - reproducible-assurance-evidence
     - deployment-scoped-assurance-claims
     - executable-conformance-testing
@@ -31,14 +32,15 @@ authority:
     - enterprise-risk-acceptance
     - regulator-authority
     - external-framework-governance
-  delegation: "Repository maintainers govern the EAP profile, mappings, tests, evidence and handoff contracts, frozen compatibility surface, readiness criteria, and claim semantics. System owners, assessors, risk authorities, regulators, ATAL stewards, and external frameworks retain their own authority. Major-version promotion remains an explicit governance decision under issue #12."
-  revocation_or_supersession: "Profile controls, mappings, baselines, tests, handoffs, readiness declarations, freezes, and claims are superseded through explicit versioned changes with prior states retained for audit. Assurance claims additionally support expiry and explicit revocation."
+  delegation: "Repository maintainers govern the EAP profile, mappings, tests, evidence and handoff contracts, frozen compatibility surface, readiness criteria, onboarding contract, and claim semantics. System owners, assessors, risk authorities, regulators, ATAL stewards, and external frameworks retain their own authority. Major-version promotion remains an explicit governance decision under issue #12."
+  revocation_or_supersession: "Profile controls, mappings, baselines, tests, handoffs, onboarding paths, readiness declarations, freezes, and claims are superseded through explicit versioned changes with prior states retained for audit. Assurance claims additionally support expiry and explicit revocation."
 evidence:
   validation_commands:
     - python scripts/check_upstream_integrity.py
     - python scripts/check_assurance_invariants.py
     - python scripts/check_contract_compatibility.py
     - python scripts/check_governance_freeze.py
+    - python scripts/validate_operator_onboarding.py
     - python scripts/validate_conformance_corpus.py
     - python scripts/validate_l2_worked_example.py
     - python scripts/validate_l3_worked_example.py
@@ -52,6 +54,9 @@ evidence:
     - assurance/stable-contracts.yaml
     - assurance/v1-readiness-criteria.yaml
     - assurance/governance-freeze.yaml
+    - docs/getting-started.md
+    - examples/eap-l2-worked-example/README.md
+    - examples/eap-l3-worked-example/README.md
     - schemas/assessor-handoff.schema.json
     - tests/fixtures/conformance/
     - tests/fixtures/handoff/tampered-digest.json
