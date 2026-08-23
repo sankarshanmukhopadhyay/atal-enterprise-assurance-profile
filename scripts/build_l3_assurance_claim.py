@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 
+import yaml
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,11 @@ def load(path: Path):
 
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def repository_version() -> str:
+    status = yaml.safe_load((ROOT / "PROJECT-STATUS.yaml").read_text(encoding="utf-8"))
+    return str(status["project"]["version"])
 
 
 def main() -> int:
@@ -41,7 +47,7 @@ def main() -> int:
         "schema_version":"1.0",
         "claim_id":"eap:claim:sample-critical-operations-agent:prod-critical-01:2026-08-22",
         "subject":{"system_id":profile["system"]["system_id"],"deployment_id":profile["system"]["deployment_id"]},
-        "profile":{"id":"EAP-L3","version":"0.9.2"},
+        "profile":{"id":"EAP-L3","version":repository_version()},
         "state":state,
         "control_summary":counts,
         "evidence_bundle":{"path":"examples/eap-l3-worked-example/evidence-bundle.json","sha256":digest(CASE / "evidence-bundle.json")},
