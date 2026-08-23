@@ -1,162 +1,83 @@
 # ATAL Enterprise Assurance Profile (EAP)
 ## Compatibility and Versioning Policy
 
----
+## 1. Normative language
 
-## 1. Normative Language
+The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** are interpreted as described by RFC 2119 and RFC 8174 when capitalized.
 
-The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**,  
-**SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** in this document are to be interpreted as described in:
+## 2. Purpose and scope
 
-- RFC 2119 — Key words for use in RFCs to Indicate Requirement Levels  
-- RFC 8174 — Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words  
+EAP is an assurance overlay for the ATAL Standard. It does not replace, fork, or redefine ATAL. It profiles, constrains, and operationalizes ATAL for enterprise assurance contexts.
 
-These terms are normative only when capitalized.
+Version identifiers communicate assurance stability, compatibility scope, and change risk.
 
----
+## 3. Versioning model
 
-## 2. Purpose and Scope
+EAP follows Semantic Versioning (`MAJOR.MINOR.PATCH`) independently of upstream ATAL version numbers.
 
-This document defines how versions of the ATAL Enterprise Assurance Profile (EAP) relate to upstream ATAL Standard releases.
+- **MAJOR**: incompatible assurance requirements or profile semantics.
+- **MINOR**: backward-compatible capabilities, profiles, or control families.
+- **PATCH**: compatible hardening, clarifications, evidence/test additions, and operational improvements.
 
-EAP is an assurance overlay. It does not replace, fork, or redefine ATAL.  
-It profiles, constrains, and operationalizes ATAL for enterprise deployment contexts.
+EAP SHALL NOT mirror ATAL version identifiers merely for visual alignment.
 
-Version identifiers SHALL communicate:
+## 4. Upstream compatibility declaration
 
-- Assurance stability  
-- Compatibility scope  
-- Change risk  
+Every EAP release MUST declare:
 
----
+1. the upstream ATAL version profiled;
+2. the exact upstream tag or commit used as the normative baseline;
+3. the compatibility class.
 
-## 3. Versioning Model
+The machine-readable authority is `upstream/atal-baseline.yaml`. Missing upstream provenance renders a release incomplete.
 
-EAP SHALL follow Semantic Versioning (SemVer):
+## 5. Compatibility classes
 
-MAJOR.MINOR.PATCH
-
-Version components SHALL be incremented as follows:
-
-- MAJOR: Incompatible changes to assurance requirements or profile semantics.
-- MINOR: Backward-compatible additions, new profiles, or expanded control mappings.
-- PATCH: Corrections, documentation fixes, clarifications, or non-normative refinements.
-
-EAP version numbers SHALL be independent of upstream ATAL version numbers.
-
-EAP SHALL NOT mirror ATAL version identifiers solely for visual alignment.
-
----
-
-## 4. Upstream Compatibility Declaration
-
-Each EAP release MUST declare:
-
-1. The upstream ATAL version it profiles.
-2. The specific upstream tag or commit hash used as the normative baseline.
-3. The compatibility class defined in Section 5.
-
-This declaration SHALL be recorded in:
-
-- UPSTREAM.md
-- The GitHub Release Notes
-- The repository compatibility matrix
-
-Failure to declare upstream compatibility renders the release incomplete.
-
----
-
-## 5. Compatibility Classes
-
-EAP SHALL classify upstream alignment using one of the following classes:
-
-### 5.1 Strict Compatible
-
-EAP profiles ATAL without redefining, constraining, or extending normative behavior.  
-All EAP controls map directly to ATAL constructs.
-
-### 5.2 Constrained Compatible
-
-EAP narrows optionality in ATAL (e.g., converting MAY to MUST for enterprise assurance).  
-No ATAL normative requirement is contradicted.
-
-### 5.3 Extended Compatible
-
-EAP introduces additional enterprise assurance requirements not explicitly defined in ATAL, provided they do not conflict with ATAL normative behavior.
+- **Strict Compatible** — EAP profiles ATAL without additional normative constraint or extension.
+- **Constrained Compatible** — EAP narrows ATAL optionality without contradiction.
+- **Extended Compatible** — EAP adds enterprise assurance requirements without contradicting ATAL.
 
 EAP SHALL NOT contradict upstream ATAL normative requirements under any compatibility class.
 
----
+## 6. Version advancement policy
 
-## 6. Version Advancement Policy
-
-EAP version increments SHALL be governed as follows:
-
-| Change Type | Version Increment |
-|-------------|-------------------|
-| Incompatible assurance requirement change | MAJOR |
+| Change type | Increment |
+|---|---|
+| Incompatible assurance requirement/profile change | MAJOR |
 | New enterprise assurance level | MINOR |
-| New control family (backward compatible) | MINOR |
-| Mapping updates without semantic change | PATCH |
-| Clarification of requirement intent | PATCH |
-| Upstream ATAL minor update with no impact | PATCH |
-| Upstream ATAL update requiring control reinterpretation | MINOR |
-| Upstream ATAL breaking normative change affecting EAP semantics | MAJOR |
+| Backward-compatible new control family | MINOR |
+| Compatible mapping/evidence/test hardening | PATCH |
+| Clarification without semantic break | PATCH |
+| Upstream change requiring incompatible EAP reinterpretation | MAJOR |
 
-If upstream ATAL introduces normative changes that alter EAP control semantics, EAP MUST increment MAJOR.
+## 7. Candidate-stable pre-v1 surface
 
----
+As of v0.9.5, `assurance/stable-contracts.yaml` is frozen for the explicit v1.0 decision. The frozen surface includes:
 
-## 7. Compatibility Matrix
+- the declared core schemas;
+- `EAP-CTRL-NNN` control identifier syntax;
+- `EAP-TEST-*` executable-test identifier syntax;
+- assurance-claim states;
+- test-result states.
 
-The repository SHALL maintain a compatibility matrix mapping EAP versions to upstream ATAL versions.
+`scripts/check_contract_compatibility.py` is the executable compatibility check for this surface.
 
-Example:
+Before the explicit v1.0 decision, a frozen identifier, state, or required core-field contract MUST NOT be incompatibly changed without a documented breaking-change disposition. A change that would make existing conformant artifacts invalid MUST be treated as a compatibility event, not a routine patch.
 
-| EAP Version | Upstream ATAL | Compatibility Class |
-|-------------|---------------|---------------------|
-| v0.1.x | v0.9.x | Constrained Compatible |
+## 8. Upstream pinning and audit requirements
 
-The matrix MUST be updated as part of each release.
-
----
-
-## 8. Upstream Pinning and Audit Requirements
-
-For audit-grade deployments:
-
-- Implementers SHOULD pin both the EAP version and the upstream ATAL tag/commit.
-- Implementers SHOULD archive both artifacts as part of conformance evidence.
-- Implementers MAY include the compatibility matrix in audit documentation.
+For audit-grade use, implementers SHOULD archive both the EAP release and exact upstream ATAL baseline. Assurance handoffs SHOULD preserve digest-addressed source references and version information.
 
 Failure to pin upstream references introduces interpretive ambiguity and weakens assurance claims.
 
----
+## 9. Forward evolution and v1.0
 
-## 9. Forward Evolution
+EAP MAY reach 1.0 independently of ATAL if enterprise assurance semantics, control mappings, executable conformance behavior, handoff reproducibility, and compatibility behavior are sufficiently stable.
 
-EAP MAY reach 1.0.0 independently of ATAL reaching 1.0.0 if:
+A `ready_for_v1_decision` readiness result does not itself change the version. Major-version promotion requires the explicit governance process identified in issue #12 and a dedicated release PR.
 
-- Enterprise assurance semantics are stable.
-- Control mappings are mature.
-- Test harness artifacts are reproducible.
-- Compatibility behavior is predictable.
+No automated release workflow is authorized to infer v1.0 solely from readiness evidence.
 
-Conversely, EAP MAY remain pre-1.0.0 even if ATAL reaches 1.0.0 where assurance interpretation remains under active refinement.
+## 10. Governance principle
 
-Version numbers SHALL reflect assurance stability, not ecosystem symbolism.
-
----
-
-## 10. Governance Principle
-
-Version identifiers are risk indicators.
-
-EAP versioning SHALL prioritize:
-
-- Compatibility clarity  
-- Assurance predictability  
-- Auditor interpretability  
-- Controlled evolution  
-
-Version inflation for signaling alignment is prohibited.
+Version identifiers are risk indicators. EAP versioning prioritizes compatibility clarity, assurance predictability, auditor interpretability, controlled evolution, and preserved evidence history. Version inflation or silent compatibility breaks are prohibited.

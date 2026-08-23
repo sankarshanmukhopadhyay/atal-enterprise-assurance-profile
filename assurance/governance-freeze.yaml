@@ -1,0 +1,43 @@
+schema_version: "1.0"
+profile_version: "0.9.5"
+status: frozen-for-v1-decision
+freeze_date: "2026-08-23"
+frozen_surfaces:
+  release_governance:
+    evidence:
+      - .github/workflows/publish-release.yml
+      - scripts/release_governance.py
+    rule: "Release tags are immutable and publication binds the validated release ledger to an exact commit."
+  authority_model:
+    evidence:
+      - GOVERNANCE.md
+      - docs/assurance-claim-model.md
+      - docs/independent-assessor-handoff.md
+    rule: "Profile, system, assessment, risk-acceptance, and independent-verifier authorities remain logically distinct; verification does not confer certification or risk-acceptance authority."
+  compatibility_surface:
+    evidence:
+      - COMPATIBILITY.md
+      - assurance/stable-contracts.yaml
+      - scripts/check_contract_compatibility.py
+    rule: "Candidate-stable schemas, identifiers, claim states, and test-result states SHALL NOT change incompatibly before the explicit v1.0 decision without a documented breaking-change disposition."
+  assurance_lifecycle:
+    evidence:
+      - schemas/assurance-claim.schema.json
+      - schemas/assessor-handoff.schema.json
+      - scripts/verify_assessor_handoff.py
+    rule: "Expiry, revocation, digest binding, and authority scope remain part of the assurance claim/handoff contract."
+blocker_disposition:
+  V1-RDY-008:
+    status: resolved
+    resolution: "Final governance, authority, release, and compatibility surfaces are frozen for the separate v1.0 decision gate."
+    evidence: assurance/governance-freeze.yaml
+remaining_nonblocking_limitations:
+  - "Reference deployments and evidence remain synthetic and do not certify a live deployment."
+  - "Regulatory approval and legal-compliance equivalence are not asserted."
+  - "Enterprise risk acceptance remains with the declared risk-acceptance authority."
+  - "The offline quality gate does not live-query whether the pinned upstream commit remains the upstream branch tip."
+v1_decision:
+  issue: 12
+  required: true
+  automatic_promotion: false
+  rule: "v1.0 MUST be the result of an explicit governance decision and release PR; no automation may infer a major-version promotion from readiness status."
