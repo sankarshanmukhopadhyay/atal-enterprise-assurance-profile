@@ -1,0 +1,33 @@
+schema_version: "1.0"
+profile_version: "0.9.4"
+stability: candidate-stable
+schemas:
+  - schemas/control-catalog.schema.json
+  - schemas/assurance-profile.schema.json
+  - schemas/evidence-bundle.schema.json
+  - schemas/assessment-result.schema.json
+  - schemas/deployment-profile.schema.json
+  - schemas/assurance-claim.schema.json
+  - schemas/test-case.schema.json
+  - schemas/test-result.schema.json
+  - schemas/assessor-handoff.schema.json
+identifiers:
+  control_id_pattern: '^EAP-CTRL-[0-9]{3}$'
+  test_id_pattern: '^EAP-TEST-[A-Z0-9-]+$'
+claim_states:
+  - CONFORMANT
+  - CONFORMANT-WITH-EXCEPTIONS
+  - PARTIALLY-CONFORMANT
+  - NON-CONFORMANT
+  - INDETERMINATE
+  - EXPIRED
+  - REVOKED
+test_result_states:
+  - pass
+  - fail
+  - indeterminate
+  - error
+compatibility_policy:
+  - stable identifiers MUST NOT change meaning or syntax incompatibly before v1.0 without an explicit breaking-change disposition
+  - declared claim and test-result states MUST NOT be removed or renamed
+  - candidate-stable schemas MUST remain parseable and retain required core fields through the remainder of the 0.9.x line

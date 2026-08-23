@@ -28,6 +28,8 @@ VALIDATION_COMMANDS = [
     [PYTHON, "scripts/validate_test_catalog.py"],
     [PYTHON, "scripts/validate_external_mappings.py"],
     [PYTHON, "scripts/check_assurance_invariants.py"],
+    [PYTHON, "scripts/check_contract_compatibility.py"],
+    [PYTHON, "scripts/validate_conformance_corpus.py"],
     [PYTHON, "scripts/validate_l2_worked_example.py"],
     [PYTHON, "scripts/validate_l3_worked_example.py"],
     [PYTHON, "scripts/validate_evidence_bundle.py", "evidence/samples/eap-l1-sample-evidence-bundle.json"],
@@ -53,6 +55,7 @@ BUILD_COMMANDS = [
     [PYTHON, "scripts/build_l3_assurance_claim.py"],
     [PYTHON, "scripts/build_assessor_handoff.py"],
     [PYTHON, "scripts/verify_assessor_handoff.py", "--tamper-self-test"],
+    [PYTHON, "scripts/build_v1_readiness_report.py"],
     [PYTHON, "scripts/export_csv_xlsx.py", "--source", "catalog"],
     [PYTHON, "scripts/export_csv_xlsx.py", "--source", "assessment", "--result", "assessments/samples/eap-l1-sample-assessment.json"],
 ]

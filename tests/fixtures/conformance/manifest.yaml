@@ -1,0 +1,26 @@
+schema_version: "1.0"
+fixtures:
+  - id: claim-valid
+    schema: schemas/assurance-claim.schema.json
+    instance: tests/fixtures/conformance/claim-valid.json
+    expected: valid
+  - id: claim-missing-authority
+    schema: schemas/assurance-claim.schema.json
+    instance: tests/fixtures/conformance/claim-missing-authority.json
+    expected: invalid
+  - id: test-result-valid
+    schema: schemas/test-result.schema.json
+    instance: tests/fixtures/conformance/test-result-valid.json
+    expected: valid
+  - id: test-result-invalid-state
+    schema: schemas/test-result.schema.json
+    instance: tests/fixtures/conformance/test-result-invalid-state.json
+    expected: invalid
+  - id: handoff-valid
+    schema: schemas/assessor-handoff.schema.json
+    instance: tests/fixtures/conformance/handoff-valid.json
+    expected: valid
+  - id: handoff-missing-authorities
+    schema: schemas/assessor-handoff.schema.json
+    instance: tests/fixtures/conformance/handoff-missing-authorities.json
+    expected: invalid
