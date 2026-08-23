@@ -21,8 +21,14 @@ def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def repository_version() -> str:
+    status = yaml.safe_load((ROOT / "PROJECT-STATUS.yaml").read_text(encoding="utf-8"))
+    return str(status["project"]["version"])
+
+
 def main() -> int:
     config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+    version = repository_version()
     claim_path = ROOT / "artifacts/eap-l3-assurance-claim.json"
     if not claim_path.exists():
         print("ERROR: build the L3 assurance claim before the handoff", file=sys.stderr)
@@ -30,15 +36,19 @@ def main() -> int:
     claim = load_json(claim_path)
     sources = []
     for entry in config["sources"]:
-        path = ROOT / entry["path"]
-        if not path.exists():
-            print(f"ERROR: missing handoff source {entry['path']}", file=sys.stderr)
+        rel = entry.get("path") or entry.get("path_template", "").format(version=version)
+        if not rel:
+            print(f"ERROR: handoff source lacks path: {entry}", file=sys.stderr)
             return 1
-        sources.append({"role": entry["role"], "path": entry["path"], "sha256": digest(path)})
+        path = ROOT / rel
+        if not path.exists():
+            print(f"ERROR: missing handoff source {rel}", file=sys.stderr)
+            return 1
+        sources.append({"role": entry["role"], "path": rel, "sha256": digest(path)})
     manifest = {
         "schema_version": "1.0",
-        "handoff_id": "eap:handoff:sample-critical-operations-agent:prod-critical-01:0.9.3",
-        "profile": {"id": "EAP-L3", "version": "0.9.3"},
+        "handoff_id": f"eap:handoff:{claim['subject']['system_id']}:{claim['subject']['deployment_id']}:{version}",
+        "profile": {"id": "EAP-L3", "version": version},
         "subject": claim["subject"],
         "authorities": claim["authorities"],
         "lifecycle": {
@@ -57,7 +67,7 @@ def main() -> int:
         return 1
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-    print(f"✓ wrote {OUT.relative_to(ROOT)} with {len(sources)} digest-bound sources")
+    print(f"✓ wrote {OUT.relative_to(ROOT)} for v{version} with {len(sources)} digest-bound sources")
     return 0
 
 
