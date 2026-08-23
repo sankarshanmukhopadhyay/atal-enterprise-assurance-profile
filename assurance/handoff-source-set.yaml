@@ -1,6 +1,6 @@
 schema_version: "1.0"
 profile: EAP-L3
-version: "0.9.3"
+version_source: PROJECT-STATUS.yaml
 subject:
   system_id: sample-critical-operations-agent
   deployment_id: prod-critical-01
@@ -14,7 +14,7 @@ sources:
   - role: upstream-baseline
     path: upstream/atal-baseline.yaml
   - role: release-record
-    path: releases/v0.9.3.md
+    path_template: releases/v{version}.md
   - role: assurance-claim
     path: artifacts/eap-l3-assurance-claim.json
   - role: test-result
