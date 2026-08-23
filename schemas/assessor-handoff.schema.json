@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sankarshanmukhopadhyay/atal-enterprise-assurance-profile/schemas/assessor-handoff.schema.json",
+  "title": "EAP Independent Assessor Handoff Manifest",
+  "type": "object",
+  "required": ["schema_version", "handoff_id", "profile", "subject", "authorities", "lifecycle", "sources"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "handoff_id": {"type": "string", "minLength": 1},
+    "profile": {"type": "object", "required": ["id", "version"], "properties": {"id": {"enum": ["EAP-L1", "EAP-L2", "EAP-L3"]}, "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}}, "additionalProperties": false},
+    "subject": {"type": "object", "required": ["system_id", "deployment_id"], "properties": {"system_id": {"type": "string"}, "deployment_id": {"type": "string"}}, "additionalProperties": false},
+    "authorities": {"type": "object", "required": ["profile_authority", "system_authority", "assessment_authority", "risk_acceptance_authority"], "properties": {"profile_authority": {"type": "string"}, "system_authority": {"type": "string"}, "assessment_authority": {"type": "string"}, "risk_acceptance_authority": {"type": "string"}}, "additionalProperties": false},
+    "lifecycle": {"type": "object", "required": ["assessed_at", "expires_at", "state"], "properties": {"assessed_at": {"type": "string", "format": "date-time"}, "expires_at": {"type": "string", "format": "date-time"}, "state": {"enum": ["CONFORMANT", "CONFORMANT-WITH-EXCEPTIONS", "PARTIALLY-CONFORMANT", "NON-CONFORMANT", "INDETERMINATE", "EXPIRED", "REVOKED"]}, "revoked_at": {"type": ["string", "null"], "format": "date-time"}, "revocation_reason": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "sources": {"type": "array", "minItems": 6, "items": {"type": "object", "required": ["role", "path", "sha256"], "properties": {"role": {"enum": ["deployment-profile", "evidence-bundle", "assessment", "test-result", "upstream-baseline", "release-record", "assurance-claim", "waiver"]}, "path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false}}
+  },
+  "additionalProperties": false
+}
