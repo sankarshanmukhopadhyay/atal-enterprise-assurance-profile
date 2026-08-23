@@ -30,6 +30,7 @@ VALIDATION_COMMANDS = [
     [PYTHON, "scripts/check_assurance_invariants.py"],
     [PYTHON, "scripts/check_contract_compatibility.py"],
     [PYTHON, "scripts/check_governance_freeze.py"],
+    [PYTHON, "scripts/validate_operator_onboarding.py"],
     [PYTHON, "scripts/validate_conformance_corpus.py"],
     [PYTHON, "scripts/validate_l2_worked_example.py"],
     [PYTHON, "scripts/validate_l3_worked_example.py"],
