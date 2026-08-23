@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "test_id": "EAP-TEST-FIXTURE-002",
+  "control_ids": ["EAP-CTRL-001"],
+  "subject": {"system_id": "fixture-system", "deployment_id": "fixture-deployment"},
+  "started_at": "2026-08-23T00:00:00Z",
+  "completed_at": "2026-08-23T00:00:01Z",
+  "result": "unsafe-pass",
+  "observations": [{"fixture": true}],
+  "evidence": [{"artifact_type": "fixture", "path_or_url": "fixture/result.json", "sha256": null}],
+  "runner": {"name": "fixture-runner", "version": "1.0", "adapter": null}
+}
