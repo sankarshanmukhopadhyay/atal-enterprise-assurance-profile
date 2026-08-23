@@ -51,6 +51,8 @@ BUILD_COMMANDS = [
     [PYTHON, "scripts/compile_assessment_report.py", "--level", "EAP-L3", "--bundle", "examples/eap-l3-worked-example/evidence-bundle.json", "--result", "examples/eap-l3-worked-example/assessment-result.json"],
     [PYTHON, "scripts/build_l2_assurance_claim.py"],
     [PYTHON, "scripts/build_l3_assurance_claim.py"],
+    [PYTHON, "scripts/build_assessor_handoff.py"],
+    [PYTHON, "scripts/verify_assessor_handoff.py", "--tamper-self-test"],
     [PYTHON, "scripts/export_csv_xlsx.py", "--source", "catalog"],
     [PYTHON, "scripts/export_csv_xlsx.py", "--source", "assessment", "--result", "assessments/samples/eap-l1-sample-assessment.json"],
 ]
