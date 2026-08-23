@@ -1,0 +1,36 @@
+schema_version: "1.0"
+profile_version: "0.9.4"
+criteria:
+  - id: V1-RDY-001
+    description: release governance validates the current repository version
+    evidence: scripts/release_governance.py
+    blocking: true
+  - id: V1-RDY-002
+    description: upstream ATAL baseline is exactly pinned with compatibility class
+    evidence: upstream/atal-baseline.yaml
+    blocking: true
+  - id: V1-RDY-003
+    description: complete L1, L2, and L3 reference assurance paths are quality-gated
+    evidence: scripts/run_quality_gate.py
+    blocking: true
+  - id: V1-RDY-004
+    description: adversarial positive and negative executable evidence is present
+    evidence: examples/eap-l3-worked-example/negative-fixtures
+    blocking: true
+  - id: V1-RDY-005
+    description: independent-assessor handoff is reproducible and tamper rejecting
+    evidence: scripts/verify_assessor_handoff.py
+    blocking: true
+  - id: V1-RDY-006
+    description: candidate-stable contract surface passes compatibility checks
+    evidence: assurance/stable-contracts.yaml
+    blocking: true
+  - id: V1-RDY-007
+    description: core artifact conformance corpus contains accepted and rejected fixtures
+    evidence: tests/fixtures/conformance/manifest.yaml
+    blocking: true
+  - id: V1-RDY-008
+    description: final governance and compatibility freeze is complete
+    evidence: assurance/governance-freeze.yaml
+    blocking: true
+    expected_in: "0.9.5"
