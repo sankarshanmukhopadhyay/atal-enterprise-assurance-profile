@@ -2,10 +2,10 @@ schema_version: "1.0"
 project:
   name: atal-enterprise-assurance-profile
   version: "0.9.5"
-  maturity: release-candidate
+  maturity: working-draft
   lifecycle: active
   operational_status: active-development
-  specification_status: pre-1.0-final-candidate
+  specification_status: working-draft
   intended_use:
     - enterprise-assurance-profile-development
     - control-and-evidence-mapping
