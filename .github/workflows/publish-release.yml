@@ -35,7 +35,7 @@ jobs:
       versions: ${{ steps.discover.outputs.versions }}
     steps:
       - name: Check out trusted release engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'push' && github.sha || 'main' }}
           fetch-depth: 0
@@ -71,14 +71,14 @@ jobs:
         version: ${{ fromJSON(needs.discover.outputs.versions) }}
     steps:
       - name: Check out trusted release engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'push' && github.sha || 'main' }}
           fetch-depth: 0
           path: engine
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
@@ -129,7 +129,7 @@ jobs:
           printf 'mode=%s\n' "$mode" >> "$GITHUB_OUTPUT"
 
       - name: Check out exact release target
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ steps.target.outputs.sha }}
           fetch-depth: 0
