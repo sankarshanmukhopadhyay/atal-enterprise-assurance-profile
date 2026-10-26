@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this work, cite the version or commit consulted. Citation does not imply independent certification or upstream endorsement."
+title: "ATAL Enterprise Assurance Profile"
+type: software
+authors:
+  - family-names: Mukhopadhyay
+    given-names: Sankarshan
+repository-code: https://github.com/sankarshanmukhopadhyay/atal-enterprise-assurance-profile
+version: "0.9.5"
+abstract: "Independent enterprise assurance profile derived from, but not authoritative over, the upstream ATAL Standard."
